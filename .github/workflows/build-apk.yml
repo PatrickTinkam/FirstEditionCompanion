@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: first-edition-companion-release
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -60,6 +64,7 @@ jobs:
           path: out/${{ steps.version.outputs.apk }}
 
       - name: Publish APK to repository
+        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -68,7 +73,8 @@ jobs:
             echo "Repository APK already matches this build."
           else
             git commit -m "Publish First Edition Companion ${{ steps.version.outputs.tag }} APK [skip ci]"
-            git push
+            git pull --rebase origin main
+            git push origin main
           fi
 
       - name: Create or update GitHub Release
