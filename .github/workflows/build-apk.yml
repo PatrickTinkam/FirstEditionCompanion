@@ -38,6 +38,13 @@ jobs:
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
           echo "apk=FirstEditionCompanion-v$VERSION.apk" >> "$GITHUB_OUTPUT"
 
+      - name: Prepare stable prototype signing key
+        shell: bash
+        run: |
+          base64 --decode ci/fec-prototype.keystore.b64 > ci/fec-prototype.keystore
+          chmod 600 ci/fec-prototype.keystore
+          keytool -list -keystore ci/fec-prototype.keystore -storepass firsteditioncompanion -alias fecprototype >/dev/null
+
       - name: Build debug APK
         run: gradle :app:assembleDebug --stacktrace
 
