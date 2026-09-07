@@ -4,6 +4,8 @@ A dependency-light Android prototype for tracking an AD&D 1st Edition character 
 
 ## Current version: v0.3.0
 
+[Download the installable v0.3.0 APK](releases/FirstEditionCompanion-v0.3.0.apk)
+
 ### Features
 - Named character profiles: save, load, start a new character, or delete saved profiles
 - Each saved profile retains its own sheet, combat numbers, gear, notes, and casting tracks
@@ -46,6 +48,6 @@ The repository is standalone. GitHub Actions installs Gradle 9.7.1, uses JDK 17,
 gradle :app:assembleDebug
 ```
 
-The workflow uploads `FirstEditionCompanion-v0.3.0.apk` as a build artifact after each push to `main`.
+The workflow uploads `FirstEditionCompanion-v0.3.0.apk` as a build artifact and publishes the successful APK to the repository's `releases/` folder.
 
 This remains a field-test prototype rather than a complete automated rules implementation. THAC0 and saving throws are user-entered so the app can match the exact attack tables and house rules used by a campaign.
