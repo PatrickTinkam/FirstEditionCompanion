@@ -2,22 +2,24 @@
 
 A dependency-light Android prototype for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.3.0
+## Current version: v0.4.0
 
-[Download the official v0.3.0 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.3.0/FirstEditionCompanion-v0.3.0.apk)
+[Download the official v0.4.0 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.4.0/FirstEditionCompanion-v0.4.0.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
 ### Features
 - Named character profiles: save, load, start a new character, or delete saved profiles
-- Each saved profile retains its own sheet, combat numbers, gear, notes, and casting tracks
+- **Portable Save Export/Import:** back up all named profiles plus the current working character to a JSON file
+- Import backups with **Restore / Replace** or non-destructive **Merge** behavior
+- Legacy clipboard backups from v0.1-v0.3 can still be imported
+- Each saved profile retains its sheet, combat numbers, gear, notes, and casting tracks
 - Persistent full character sheet and modular multiclass casting tracks
 - Ability scores, saving throws, HP, Armor Class, THAC0, target-AC hit calculator
 - Weapon attack/damage roller
 - Searchable PHB + Unearthed Arcana class spell catalog for Cleric, Druid, Magic-User, and Illusionist
 - **Spell access is separate from preparation:** Magic-Users/Illusionists maintain a Spellbook; Clerics/Druids maintain an Available Spells list
 - Add learned/discovered spells from the catalog to the character's Spellbook/Available Spells list, then prepare one or more copies from there
-- Existing v0.2 prepared spells are automatically migrated into the new known/available list the first time a track is opened
 - Prepared/memorized spell copies remain independently tracked and can be marked used/restored as they are cast
 - Custom/campaign spells can be added to the known/available list and then prepared normally
 - Catalog includes PHB-era spell lists and Unearthed Arcana additions, including UA cantrips
@@ -26,6 +28,16 @@ A dependency-light Android prototype for tracking an AD&D 1st Edition character 
 - Integrated dice roller with expressions such as `2d6+3`
 - Equipment, wealth, proficiencies, languages, notes, and clipboard backup
 - Responsive navigation for folded and unfolded phones
+
+## Backups and updating
+Use **Export Saves** on the Sheet tab to create a portable `.json` backup. The file contains the current working character and all named saved profiles, including spellbooks, prepared spells, equipment, notes, and combat values.
+
+Use **Import Saves** to restore that file later. **Merge** preserves existing local profiles and adds imported copies under unique names; **Restore / Replace** replaces the app's character saves with the backup.
+
+### Important v0.3 → v0.4 transition
+v0.3 and earlier were built with temporary CI debug signing keys. Android may require uninstalling the older app before installing v0.4, which erases app-local data. If you have important v0.3 data, use **Copy Character Backup to Clipboard** before uninstalling and save the JSON somewhere safe. v0.4 can read it through **Import Legacy Clipboard Backup**.
+
+Starting with **v0.4.0**, official prototype releases use the same stable prototype signing key. Future updates should therefore install in place and preserve Android app data automatically, while exported backups remain the recommended safety net.
 
 ## Spell workflow
 For a Magic-User or Illusionist:
@@ -44,7 +56,7 @@ Reference books requested for the prototype catalog:
 - *Unearthed Arcana*, ISBN 0-88038-084-5
 
 ## Build and release policy
-The repository is standalone. GitHub Actions installs Gradle 9.7.1, uses JDK 17, and runs:
+The repository is standalone. GitHub Actions installs Gradle 9.7.1, uses JDK 17, decodes the stable prototype signing key, and runs:
 
 ```bash
 gradle :app:assembleDebug
