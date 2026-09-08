@@ -2,16 +2,18 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.9.1
+## Current version: v0.9.2
 
-[Download the official v0.9.1 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.1/FirstEditionCompanion-v0.9.1.apk)
+[Download the official v0.9.2 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.2/FirstEditionCompanion-v0.9.2.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
 ### Features
 - Named character profiles with save/load/new/delete
+- Prominent **Create New Character** button at the top of the Sheet launches the separate guided creator
+- **App Version** is shown directly in the Character Profiles card for quick installed-build confirmation
 - Portable JSON **Export Saves / Import Saves** with Merge and Restore/Replace
-- Dedicated **guided character creation** launched from **New Character**
+- Dedicated **guided character creation** launched from **Create New Character**
 - Character-creation draft is separate from the active character and can be resumed, kept, or discarded safely
 - Wizard **Back** navigation allows earlier choices to be changed while later choices are retained and revalidated
 - Race/Subrace choice drives class availability while **all classes remain visible** for learning and details
@@ -29,7 +31,7 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - PHB cp/sp/ep/gp/pp currency tracking with a GP-equivalent total
 - Searchable Cleric, Druid, Magic-User, and Illusionist spell catalogs
 - Magic-User/Illusionist **Spellbook** workflow with learned spells separated from prepared/memorized copies
-- Clerics automatically receive their full built-in class spell list, grouped by spell level, and prepare directly from that list
+- Clerics automatically receive their full built-in Cleric spell list, grouped by spell level, and prepare directly from that list
 - PHB spell details with school/type, range, duration, area, components, casting time, saving throw, reversibility, source page, and native effect digests
 - Native/offline spell descriptions throughout the catalog
 - Native/offline DMG and supplied-UA magic-item mechanics instead of “consult the book” placeholders
@@ -42,7 +44,7 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 
 ## Guided character creation
 
-v0.9.1 extends the dedicated character-creation workflow. **New Character** opens a separate creation activity instead of clearing the current working sheet.
+v0.9.2 restores the visible **Character Profiles** controls that were accidentally hidden by the v0.9.x Sheet override. The top of the Sheet now contains **Create New Character**, **Save Character**, **Load Character**, and **Delete Saved Character** controls. **Create New Character** opens the separate guided creation activity instead of clearing or editing the normal working sheet in place.
 
 The current wizard contains seven screens:
 1. **Race / Subrace** — choose from the native race catalog and open Race Details.
@@ -53,7 +55,7 @@ The current wizard contains seven screens:
 6. **Languages** — automatic languages are assembled from race, class, and alignment settings. Additional-language capacity uses final Intelligence plus the race's own PHB restrictions; supplied-UA background-skill language lists remain visibly source-separated.
 7. **Draft Review** — review the current race, class, age, alignment, final scores, and languages, then save the draft and return to the normal app.
 
-v0.9.1 still deliberately does **not** commit a partially built character into the active sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are implemented and can be committed atomically.
+v0.9.2 still deliberately does **not** commit a partially built character into the active sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are implemented and can be committed atomically.
 
 ### Backtracking and changing decisions
 
@@ -129,7 +131,7 @@ For a Cleric:
 
 Use **Export Saves** before major updates or moving devices. Backups include the current character, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.1 should install directly over v0.9.0 and preserve app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.2 should install directly over v0.9.1 and preserve app-local data.
 
 ## Build and release policy
 
