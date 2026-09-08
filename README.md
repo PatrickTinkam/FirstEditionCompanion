@@ -2,15 +2,21 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.8.1
+## Current version: v0.9.0
 
-[Download the official v0.8.1 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.8.1/FirstEditionCompanion-v0.8.1.apk)
+[Download the official v0.9.0 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.0/FirstEditionCompanion-v0.9.0.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
 ### Features
 - Named character profiles with save/load/new/delete
 - Portable JSON **Export Saves / Import Saves** with Merge and Restore/Replace
+- New **guided character-creation foundation** launched from **New Character**
+- Character-creation draft is separate from the active character and can be resumed, kept, or discarded safely
+- Wizard **Back** navigation allows race, class, and ability choices to be revisited without losing the rest of the draft
+- Race/Subrace choice drives class availability while **all classes remain visible** for learning and details
+- Unavailable classes are clearly marked but still expose full **Class Details**, allowing a player to go back and choose a compatible race
+- Ability-score step supports the four DMG generation methods plus manual entry, with racial modifiers applied from stored raw scores exactly once
 - Character-sheet **Race / Subrace dropdown** with native PHB and supplied-UA racial reference data
 - Immediate racial ability-adjustment summary plus detailed **Race Details**
 - Character-sheet **Class / Subclass dropdown** with native PHB and supplied-UA-variant class reference data
@@ -19,7 +25,7 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - Structured Gear page with Equipped, Carried Gear, Currency, Magic Items, Valuables & Treasure, and Mounts/Tack/Transport
 - Searchable equipment and magic-item catalogs with source labels
 - Equipment slots, quantities, optional charges/uses, and personal item notes
-- PHB cp/sp/ep/gp/pp currency tracking with GP-equivalent total
+- PHB cp/sp/ep/gp/pp currency tracking with a GP-equivalent total
 - Searchable Cleric, Druid, Magic-User, and Illusionist spell catalogs
 - Magic-User/Illusionist **Spellbook** workflow with learned spells separated from prepared/memorized copies
 - Clerics automatically receive their full built-in class spell list, grouped by spell level, and prepare directly from that list
@@ -33,17 +39,31 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - Integrated dice roller
 - Responsive navigation for folded and unfolded phones
 
+## Guided character creation
+
+v0.9.0 begins the dedicated character-creation workflow. **New Character** now opens a separate creation activity instead of immediately clearing the current working sheet.
+
+The current foundation contains four screens:
+1. **Race / Subrace** — choose from the existing native race catalog and open Race Details.
+2. **Class / Subclass** — every built-in class remains visible. Compatible classes are marked available; incompatible classes are marked unavailable but still allow Class Details to be opened.
+3. **Ability Scores** — roll with DMG Methods I–IV or enter scores manually. The draft stores raw scores separately from final racial-adjusted scores and checks the currently encoded class minimum requirements.
+4. **Draft Review** — review the current race, class, and final scores, then save the draft and return to the normal app.
+
+This first v0.9.0 slice deliberately does **not** commit a partially built character into the active sheet. The active character remains untouched until the later wizard steps—age, alignment, languages, proficiencies/secondary skills, HP, class skills, spell setup, money, equipment, derived combat values, optional personality/background, and final review—are implemented and can be committed atomically.
+
+### Backtracking and changing decisions
+
+The creator is not a one-way questionnaire. The user can go Back and change earlier decisions. Race changes re-evaluate class availability and racial score adjustments from the stored raw ability scores; modifiers are not stacked a second time. A previously chosen class can remain selected so the app can explain that it is now unavailable instead of silently deleting the player's choice.
+
 ## Character creation / race workflow
 
-The Race field is a source-aware dropdown. Built-in PHB choices include Human, standard/hill and mountain Dwarves, High Elves, Surface Gnomes, Half-Elves, Half-Orcs, and Halfling variants including Hairfoot, Stout, Tallfellow, and an unspecified/mixed PHB baseline.
+The normal Sheet Race field remains a source-aware dropdown. Built-in PHB choices include Human, standard/hill and mountain Dwarves, High Elves, Surface Gnomes, Half-Elves, Half-Orcs, and Halfling variants including Hairfoot, Stout, Tallfellow, and an unspecified/mixed PHB baseline.
 
 The supplied Unearthed Arcana variant expands the selector with Gray/Duergar Dwarves, Gray, Wood/Sylvan, Wild/Grugach, and Dark/Drow Elves, Deep/Svirfneblin Gnomes, several Half-Elf ancestry variants, and the Half-Ogre. Drow are split into male and female entries because the supplied variant gives them different starting ability adjustments.
 
 Selecting a race updates the short **Ability adjustments** line immediately. **Race Details** opens the complete native racial summary. Existing/custom race strings are preserved rather than overwritten.
 
 ## Character creation / class workflow
-
-v0.8.1 replaces the old free-form **Class(es)** field with a source-aware **Class / Subclass** selector while keeping a **Custom / Multi-class…** path for existing or campaign-specific combinations.
 
 Built-in PHB class choices are:
 - Cleric
@@ -65,23 +85,21 @@ The supplied UA-variant source adds the five fully described classes contained i
 - Necromancer
 - Psionicist
 
-The supplied UA variant references some additional class names such as Barbarian and Cavalier in racial-access and magic-item text, but it does not provide full standalone class descriptions for them in the supplied file. v0.8.1 therefore does **not** fabricate unsupported mechanics for those names.
+The supplied UA variant references some additional class names such as Barbarian and Cavalier in racial-access and magic-item text, but it does not provide full standalone class descriptions for them in the supplied file. The Companion therefore does **not** fabricate unsupported mechanics for those names.
 
-Selecting a built-in class immediately shows its **requirements / prime requisite**, **hit die**, **alignment restriction**, and source. **Class Details** opens a native offline summary covering armor and weapons, spellcasting model, major class abilities, high-level abilities/restrictions, and important advancement notes.
+On the normal Sheet, selecting a built-in class shows its **requirements / prime requisite**, **hit die**, **alignment restriction**, and source. **Class Details** opens a native offline summary covering armor and weapons, spellcasting model, major class abilities, high-level abilities/restrictions, and important advancement notes.
 
 A separate **Multi-class Rules** button summarizes the PHB distinction between nonhuman multiclassing and human dual-classing, including experience splitting, hit-point handling, equipment restrictions, and the high ability-score requirements for changing class.
 
-Class selection deliberately does not yet rewrite stored HP, THAC0, saving throws, alignment, spell tracks, or ability scores. Existing characters therefore cannot be damaged simply by opening or changing the selector.
+Normal-sheet class selection deliberately does not rewrite stored HP, THAC0, saving throws, alignment, spell tracks, or ability scores. Guided automation is confined to the separate new-character draft so existing characters cannot be damaged simply by opening or changing a selector.
 
 ## Source-grounded rules
 
-The supplied AD&D 1e *Players Handbook* remains the primary player-facing source for core races, classes, spells, and character-creation rules. PHB class material in v0.8.1 includes ability requirements, hit dice, alignment rules, armor/weapon restrictions, spellcasting, class abilities, and multiclass/dual-class procedures.
-
-The supplied *Dungeon Masters Guide* fills the broader rules/mechanics layer for treasure, magic items, combat adjudication, saving throws, charges, curses, artifact handling, and related referee procedures.
+The supplied AD&D 1e *Players Handbook* remains the primary player-facing source for core races, classes, spells, and character-creation rules. The supplied *Dungeon Masters Guide* supplies the ability-generation methods and the broader DM-facing mechanics layer.
 
 ### Unearthed Arcana source integrity
 
-The `unearthedarcana.pdf` supplied to this project contains later/conversion-style terminology and mechanics. UA-only race, class, and catalog entries remain available but are explicitly treated as **supplied UA variant** material. The app does not silently replace verified PHB/DMG mechanics with those later mechanics.
+The supplied `unearthedarcana.pdf` contains later/conversion-style terminology and mechanics. UA entries are part of the app's AD&D 1e content group but remain visibly source-labeled so variant mechanics are not silently substituted for verified PHB/DMG core rules.
 
 ### Optional source PDFs
 
@@ -107,7 +125,7 @@ For a Cleric:
 
 Use **Export Saves** before major updates or moving devices. Backups include the current character, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.8.1 should install directly over v0.8.0 and preserve app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.0 should install directly over v0.8.1 and preserve app-local data.
 
 ## Build and release policy
 
