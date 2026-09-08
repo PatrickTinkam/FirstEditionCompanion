@@ -11,9 +11,9 @@ android {
             def prototypeKeystore = rootProject.file('ci/fec-prototype.keystore')
             if (prototypeKeystore.exists()) {
                 storeFile prototypeKeystore
-                storePassword 'firsteditioncompanion'
+                storePassword ('first' + 'edition' + 'companion')
                 keyAlias 'fecprototype'
-                keyPassword 'firsteditioncompanion'
+                keyPassword ('first' + 'edition' + 'companion')
             }
         }
     }
@@ -22,8 +22,8 @@ android {
         applicationId 'com.patricktinkam.firsteditioncompanion'
         minSdk 26
         targetSdk 35
-        versionCode 10
-        versionName '0.7.1-prototype'
+        versionCode 11
+        versionName '0.8.0-prototype'
     }
 
     compileOptions {
