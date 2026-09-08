@@ -1,26 +1,28 @@
-# First Edition Companion v0.6.0
+# First Edition Companion v0.7.0
 
-This release begins the source-grounded rules-reference pass using the rulebooks supplied for the project, with the 1978 AD&D 1e *Players Handbook* treated as the verified primary source.
+v0.7.0 is a major sourcebook-mechanics pass built around the supplied AD&D Players Handbook, Dungeon Masters Guide, and Unearthed Arcana material.
 
 ## Highlights
-- Added structured PHB spell-reference data: school/type, range, duration, area of effect, components, casting time, saving throw, source page, and a concise rules digest where the source can be matched confidently.
-- PHB spell details now resolve dynamically, so characters created in older versions benefit from the richer reference without needing to recreate Spellbook or prepared-spell entries.
-- Added a new **Rules** tab with table-ready PHB references for spell preparation and memorization, spellcasting and interruption, currency and money changing, armor and shield handling, weapon proficiency and weapon factors, encumbrance and movement, light and surprise, turning undead, saving throws and Armor Class, damage, falling, healing, and experience.
-- Added optional local rulebook linking. Select your own PHB/UA/DMG PDF with Android's file picker, and source-grounded PHB entries can open the cited page inside the app.
-- Gear catalog entries now expose a **Rules** action with PHB handling where the PHB supports it.
-- Added PHB shield coverage mechanics, weapon-proficiency context, weapon-factor guidance, light-source rules, currency handling, and encumbrance guidance.
-- Combat now includes source-grounded quick references for AC/saving throws, spell interruption, damage, falling, and healing.
-- v0.6 backups identify themselves as v0.6.0 while retaining compatibility with the existing portable backup format.
+- Replaced the old DMG magic-item placeholder behavior with native, offline mechanics.
+- Added dedicated descriptions for a large set of commonly used and mechanically complex swords, weapons, rings, rods, staves, wands, armor, and miscellaneous magic items.
+- Added family-level mechanics for every remaining magic-item catalog entry so items no longer fall back to “consult the book for exact powers.”
+- Standard +X weapons and armor now explain how their bonuses apply; cursed and specialized items explain their overriding behavior.
+- Added native handling for potions/oils, scrolls, rings, charged devices, artifacts/relics, cursed items, and command-word/charge concepts.
+- Expanded the Rules tab from a PHB quick reference into a broader PHB + DMG table reference.
+- Added DMG rules summaries for Cleric spell access, Magic-User spell acquisition, spellcasting during melee, cover and counter-affecting spells, initiative, surprise, weapon speed, charge attacks, two-weapon fighting, morale, saving throw categories, item saving throws, magic resistance, turning undead, holy/unholy water, potion miscibility, scrolls, rings, rods/staves/wands, identification, command words, charges, cursed items, artifacts/relics, expenses, gems, XP awards, and level training.
+- PHB spell entries continue to show school/type, range, duration, area, components, casting time, saving throw, reversibility, source page, and a native effect digest.
+- Clerics still receive their entire built-in divine spell list automatically and prepare directly from it.
+- Linked source PDFs are now explicitly optional verification tools rather than dependencies.
 
 ## Source integrity
-The supplied *Players Handbook* is a 1978 AD&D 1e PHB scan and is used as the authoritative PHB source in this release.
+The supplied Players Handbook and Dungeon Masters Guide are used as the primary AD&D 1e rules sources for this build.
 
-The supplied `unearthedarcana.pdf` uses original-style presentation but its internal rules text contains later revised/variant mechanics and terminology rather than matching a clean original 1985 TSR *Unearthed Arcana*. To avoid silently mixing editions, v0.6 keeps existing UA catalog entries but does not overwrite the verified PHB rules layer with those variant mechanics.
+The supplied `unearthedarcana.pdf` contains later/conversion-style terminology and systems that are not presented as clean original 1985 AD&D 1e mechanics. UA-only entries therefore remain labeled as **supplied UA variant** material instead of silently replacing verified PHB/DMG rules.
 
-Many detailed magic-item powers live in the *Dungeon Masters Guide*. Because a DMG PDF was not supplied for this pass, DMG-only magic items remain clearly source-tagged and the app does not invent or guess their powers.
+All built-in descriptions are table-use summaries written for the Companion rather than reproductions of complete rulebook passages.
 
 ## Updating
-v0.6.0 uses the same stable prototype signing key as v0.4.0 and v0.5.0, so it should install directly over v0.5.0 while preserving local data. **Export Saves** before updating is still recommended.
+v0.7.0 uses the same stable prototype signing key as prior builds and should install directly over v0.6.2 while preserving app-local data. Export Saves before a major update is still recommended.
 
 ## Installation
-Download the attached `FirstEditionCompanion-v0.6.0.apk` from this release and install it on Android.
+Download the attached `FirstEditionCompanion-v0.7.0.apk` and install it on Android.
