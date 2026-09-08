@@ -31,6 +31,7 @@ public class MainActivityV12 extends MainActivityV11 {
 
   @Override void sheet(LinearLayout c){
     LinearLayout profiles=card("Character Profiles");
+    profiles.addView(t("App Version: v0.9.2",14,GOLD,true));
     profiles.addView(t("Current working sheet: "+S("name","New Character"),14,MUT,false));
     profiles.addView(t("Create New Character opens the separate guided, multi-step creator. Your current character remains untouched while you work through the draft.",12,MUT,false));
 
