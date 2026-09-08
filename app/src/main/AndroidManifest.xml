@@ -5,6 +5,10 @@
         android:theme="@style/AppTheme"
         android:supportsRtl="true">
         <activity
+            android:name=".CharacterCreationActivity"
+            android:exported="false"
+            android:screenOrientation="unspecified" />
+        <activity
             android:name=".MainActivityV11"
             android:exported="true"
             android:screenOrientation="unspecified">
