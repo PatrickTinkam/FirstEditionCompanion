@@ -8,7 +8,7 @@ public final class GearCatalog {
     public final boolean magic;
     Entry(String n,String c,String s,String cost,String weight,boolean magic){
       this.name=n;this.category=c;this.source=s;this.cost=cost;this.weight=weight;this.magic=magic;
-      this.summary=magic?"Magic item reference. Consult the named AD&D 1e source for exact powers, restrictions, charges, command words, and special cases.":"Core equipment reference. Consult the named AD&D 1e source for any campaign-specific handling or special rules.";
+      this.summary=magic?MagicItemRules.describe(this):EquipmentRules.describe(this);
     }
     public String label(){String x=name+"  •  "+category+"  ["+source+"]";if(!cost.isEmpty())x+="  •  "+cost;if(!weight.isEmpty())x+="  •  "+weight;return x;}
   }
