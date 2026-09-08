@@ -9,7 +9,11 @@
             android:exported="false"
             android:screenOrientation="unspecified" />
         <activity
-            android:name=".MainActivityV11"
+            android:name=".CharacterCreationActivityV2"
+            android:exported="false"
+            android:screenOrientation="unspecified" />
+        <activity
+            android:name=".MainActivityV12"
             android:exported="true"
             android:screenOrientation="unspecified">
             <intent-filter>
