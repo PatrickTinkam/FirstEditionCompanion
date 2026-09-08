@@ -5,17 +5,17 @@ import android.view.*;
 import android.widget.*;
 import org.json.*;
 
-/** v0.9.2: restores the visible character-profile controls and guided-creator entry point. */
+/** v0.9.3: profile-first empty state; the full sheet only appears for a real active character. */
 public class MainActivityV12 extends MainActivityV11 {
   @Override JSONObject makeBackup(){
     JSONObject o=super.makeBackup();
-    try{o.put("appVersion","0.9.2");}catch(Exception ignored){}
+    try{o.put("appVersion","0.9.3");}catch(Exception ignored){}
     return o;
   }
 
   @Override void shell(){
     LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(BG);setContentView(root);
-    TextView title=t("FIRST EDITION COMPANION  •  v0.9.2",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
+    TextView title=t("FIRST EDITION COMPANION  •  v0.9.3",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
     float w=getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density;boolean wide=w>=700;
     LinearLayout body=new LinearLayout(this);body.setOrientation(wide?LinearLayout.HORIZONTAL:LinearLayout.VERTICAL);root.addView(body,new LinearLayout.LayoutParams(-1,0,1));
     LinearLayout nav=new LinearLayout(this);nav.setOrientation(wide?LinearLayout.VERTICAL:LinearLayout.HORIZONTAL);
@@ -29,23 +29,40 @@ public class MainActivityV12 extends MainActivityV11 {
     startActivity(new Intent(this,CharacterCreationActivityV2.class));
   }
 
+  boolean hasActiveCharacter(){
+    String name=S("name","").trim();
+    return !name.isEmpty()&&!name.equalsIgnoreCase("New Character");
+  }
+
   @Override void sheet(LinearLayout c){
+    boolean active=hasActiveCharacter();
+    String name=S("name","").trim();
+
     LinearLayout profiles=card("Character Profiles");
-    profiles.addView(t("App Version: v0.9.2",14,GOLD,true));
-    profiles.addView(t("Current working sheet: "+S("name","New Character"),14,MUT,false));
-    profiles.addView(t("Create New Character opens the separate guided, multi-step creator. Your current character remains untouched while you work through the draft.",12,MUT,false));
+    profiles.addView(t("App Version: v0.9.3",14,GOLD,true));
+    profiles.addView(t(active?"Active character: "+name:"No active character",14,MUT,false));
+    profiles.addView(t(active
+      ?"Create New Character opens a separate guided draft. Your current character remains untouched until a new character is finished."
+      :"Create a new character with the guided creator, or load one of your saved characters. The blank legacy character sheet is hidden until a real character is active.",12,MUT,false));
 
     Button create=b("Create New Character");
     create.setOnClickListener(v->newCharacter());
     profiles.addView(create,new LinearLayout.LayoutParams(-1,dp(54)));
 
     LinearLayout row=new LinearLayout(this);
-    Button save=b("Save Character");save.setOnClickListener(v->saveCharacterDialog());row.addView(save,new LinearLayout.LayoutParams(0,dp(48),1));
+    Button save=b("Save Character");save.setEnabled(active);save.setOnClickListener(v->saveCharacterDialog());row.addView(save,new LinearLayout.LayoutParams(0,dp(48),1));
     Button load=b("Load Character");load.setOnClickListener(v->loadCharacterDialog());row.addView(load,new LinearLayout.LayoutParams(0,dp(48),1));
     profiles.addView(row);
 
     Button del=b("Delete Saved Character");del.setOnClickListener(v->deleteCharacterDialog());profiles.addView(del,new LinearLayout.LayoutParams(-1,dp(46)));
     add(c,profiles);
+
+    if(!active){
+      LinearLayout empty=card("Ready to Begin");
+      empty.addView(t("There is no character loaded into the play sheet yet. Use Create New Character for the guided AD&D 1e creation flow, or Load Character to continue an existing adventurer.",14,TXT,false));
+      add(c,empty);
+      return;
+    }
 
     super.sheet(c);
   }
