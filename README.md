@@ -2,9 +2,9 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.7.0
+## Current version: v0.7.1
 
-[Download the official v0.7.0 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.7.0/FirstEditionCompanion-v0.7.0.apk)
+[Download the official v0.7.1 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.7.1/FirstEditionCompanion-v0.7.1.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
@@ -21,6 +21,7 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - PHB spell details with school/type, range, duration, area, components, casting time, saving throw, reversibility, source page, and native effect digests
 - Native/offline spell descriptions throughout the catalog
 - Native/offline DMG and supplied-UA magic-item mechanics instead of “consult the book” placeholders
+- Native/offline descriptions for nonmagical PHB/DMG/UA gear and treasure entries, including gems, jewelry, art objects, manuscripts, precious-metal treasure, armor, weapons, adventuring gear, transport, provisions, religious items, and spellbooks
 - Expanded **Rules** tab covering PHB and DMG spellcasting, initiative, surprise, saving throws, item saves, weapons, armor, turning undead, treasure, potion/scroll/ring/device handling, charges, cursed items, artifacts, movement, experience, and more
 - Optional local PHB/UA/DMG PDF linking for source-page verification only; PDFs are not required to use the reference
 - Combat dashboard with HP, AC, THAC0 helper, attack/damage rolls, saves, and rules references
@@ -29,21 +30,21 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 
 ## Source-grounded rules
 
-v0.7.0 is the first broad **PHB + DMG + UA sourcebook mechanics pass**.
+v0.7.1 fixes a v0.7.0 routing bug that allowed nonmagical DMG/UA catalog entries to fall back to an obsolete “source PDF required” message. Every built-in gear and treasure entry now routes through a native offline description path.
 
 The supplied AD&D 1e *Players Handbook* remains the primary player-facing spell and class source. PHB spell entries retain the book's structured fields—type/school, range, duration, area of effect, components, casting time, saving throw, reversibility, and source page—plus a native offline effect digest.
 
-The supplied *Dungeon Masters Guide* now fills the large rules/mechanics gap that previously existed in the app. The Rules tab includes DMG handling for cleric and magic-user spell access, casting during melee, cover, counter-affecting spells, initiative and surprise, morale, weapon speed, two-weapon fighting, saving throws, item saving throws, magic resistance, turning undead, holy/unholy water, potion miscibility, scrolls, rings, rods/staves/wands, identification, command words, charges, cursed items, artifacts/relics, character expenses, gems, experience, and training.
+The supplied *Dungeon Masters Guide* fills the large rules/mechanics layer for treasure, magic items, combat adjudication, saving throws, charges, curses, artifact handling, and related referee procedures. DMG gems and jewelry use their value-generation concepts directly in the built-in summaries; synthetic tracking categories such as Art Object clearly state when the books do not define one universal stat block and instead require a DM-assigned/appraised value.
 
-The Gear catalog now provides native mechanics for magic items. Named items with dedicated entries show their special behavior directly; remaining catalog entries receive category-specific 1e handling instead of a generic missing-description message. Standard enchanted armor and weapons explain how their pluses apply, while potions, scrolls, rings, charged devices, cursed items, and artifacts use their appropriate sourcebook handling.
+Magic items show native mechanics directly. Named items with dedicated entries show their special behavior; remaining catalog entries receive category-specific 1e handling instead of a generic missing-description message. Standard enchanted armor and weapons explain how their pluses apply, while potions, scrolls, rings, charged devices, cursed items, and artifacts use their appropriate sourcebook handling.
 
 ### Unearthed Arcana source integrity
 
-The `unearthedarcana.pdf` supplied to this project contains later/conversion-style terminology and mechanics—including systems not presented as original 1985 AD&D 1e rules. v0.7.0 therefore keeps UA-only catalog entries available but explicitly labels them as **supplied UA variant** material. The app does not silently replace verified PHB/DMG mechanics with those later mechanics.
+The `unearthedarcana.pdf` supplied to this project contains later/conversion-style terminology and mechanics—including systems not presented as original 1985 AD&D 1e rules. UA-only catalog entries remain available but are explicitly treated as **supplied UA variant** material. The app does not silently replace verified PHB/DMG mechanics with those later mechanics.
 
 ### Optional source PDFs
 
-PDF linking is now explicitly optional. The Companion is intended to remain useful offline without linked rulebooks. Linking a legally owned PDF simply allows the Rules or spell detail screens to open the cited printed page for verification.
+PDF linking is explicitly optional. The Companion is intended to remain useful offline without linked rulebooks. Linking a legally owned PDF simply allows source pages to be opened for verification.
 
 The PDFs themselves are not committed to the repository or bundled in the APK.
 
@@ -75,13 +76,13 @@ The Gear page uses one inventory record underneath several useful views:
 - **Valuables & Treasure**
 - **Mounts, Tack & Transport**
 
-Tap a catalog or recorded magic item and use its **Rules** action to see native mechanics, source category/page range where known, and any source-integrity note. Personal item notes remain separate from the built-in rules text.
+Tap a catalog or recorded item and use its **Rules** action to see its native offline description/mechanics and source note. Personal item notes remain separate from the built-in rules text.
 
 ## Backups and updates
 
 Use **Export Saves** before major updates or moving devices. Backups include the current character, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.7.0 should install directly over v0.6.2 and preserve app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.7.1 should install directly over v0.7.0 and preserve app-local data.
 
 ## Build and release policy
 
