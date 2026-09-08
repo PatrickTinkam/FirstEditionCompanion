@@ -8,20 +8,20 @@ import android.widget.*;
 import org.json.*;
 import java.util.*;
 
-/** v0.9.0: class/subclass selector plus guided character-creation launch point. */
+/** v0.9.1: class/subclass selector plus guided character-creation launch point. */
 public class MainActivityV11 extends MainActivityV10 {
   ClassData.Entry selectedClass;
   int selectedClassLevel=1;
 
   @Override JSONObject makeBackup(){
     JSONObject o=super.makeBackup();
-    try{o.put("appVersion","0.9.0");}catch(Exception ignored){}
+    try{o.put("appVersion","0.9.1");}catch(Exception ignored){}
     return o;
   }
 
   @Override void shell(){
     LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(BG);setContentView(root);
-    TextView title=t("FIRST EDITION COMPANION  •  v0.9.0",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
+    TextView title=t("FIRST EDITION COMPANION  •  v0.9.1",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
     float w=getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density;boolean wide=w>=700;
     LinearLayout body=new LinearLayout(this);body.setOrientation(wide?LinearLayout.HORIZONTAL:LinearLayout.VERTICAL);root.addView(body,new LinearLayout.LayoutParams(-1,0,1));
     LinearLayout nav=new LinearLayout(this);nav.setOrientation(wide?LinearLayout.VERTICAL:LinearLayout.HORIZONTAL);
