@@ -2,9 +2,9 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.6.2
+## Current version: v0.7.0
 
-[Download the official v0.6.2 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.6.2/FirstEditionCompanion-v0.6.2.apk)
+[Download the official v0.7.0 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.7.0/FirstEditionCompanion-v0.7.0.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
@@ -18,31 +18,34 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - Searchable Cleric, Druid, Magic-User, and Illusionist spell catalogs
 - Magic-User/Illusionist **Spellbook** workflow with learned spells separated from prepared/memorized copies
 - Clerics automatically receive their full built-in class spell list, grouped by spell level, and prepare directly from that list
-- PHB spell details with range, duration, area, components, casting time, saving throw, source page, and concise mechanics where matched
-- Native/offline spell descriptions throughout the catalog, including fallback summaries for entries without a full structured rules digest
-- **Rules** tab with source-grounded PHB table references
-- Optional local PHB/UA/DMG PDF linking and in-app PHB source-page viewing
-- Combat dashboard with HP, AC, THAC0 helper, attack/damage rolls, saves, and PHB combat references
+- PHB spell details with school/type, range, duration, area, components, casting time, saving throw, reversibility, source page, and native effect digests
+- Native/offline spell descriptions throughout the catalog
+- Native/offline DMG and supplied-UA magic-item mechanics instead of “consult the book” placeholders
+- Expanded **Rules** tab covering PHB and DMG spellcasting, initiative, surprise, saving throws, item saves, weapons, armor, turning undead, treasure, potion/scroll/ring/device handling, charges, cursed items, artifacts, movement, experience, and more
+- Optional local PHB/UA/DMG PDF linking for source-page verification only; PDFs are not required to use the reference
+- Combat dashboard with HP, AC, THAC0 helper, attack/damage rolls, saves, and rules references
 - Integrated dice roller
 - Responsive navigation for folded and unfolded phones
 
 ## Source-grounded rules
 
-v0.6.2 continues the book-grounding pass using the supplied 1978 AD&D 1e *Players Handbook*. The app's PHB spell reference follows the PHB's own presentation fields: type/school, level, range, duration, area of effect, components, casting time, saving throw, and effect.
+v0.7.0 is the first broad **PHB + DMG + UA sourcebook mechanics pass**.
 
-The Rules tab summarizes table-use mechanics for spell preparation, spell interruption, money, armor/shields, weapon proficiency, encumbrance, movement, light, surprise, turning undead, AC/saves, damage, healing, and experience. Each PHB reference includes a printed page number.
+The supplied AD&D 1e *Players Handbook* remains the primary player-facing spell and class source. PHB spell entries retain the book's structured fields—type/school, range, duration, area of effect, components, casting time, saving throw, reversibility, and source page—plus a native offline effect digest.
 
-### Link your own rulebooks
+The supplied *Dungeon Masters Guide* now fills the large rules/mechanics gap that previously existed in the app. The Rules tab includes DMG handling for cleric and magic-user spell access, casting during melee, cover, counter-affecting spells, initiative and surprise, morale, weapon speed, two-weapon fighting, saving throws, item saving throws, magic resistance, turning undead, holy/unholy water, potion miscibility, scrolls, rings, rods/staves/wands, identification, command words, charges, cursed items, artifacts/relics, character expenses, gems, experience, and training.
 
-On **Rules → Your Rulebooks**, use Android's system file picker to link your legally owned PDF copies. The Companion stores persistent read access to the selected document URI on that device. PHB references can then open the cited source page directly in the app.
+The Gear catalog now provides native mechanics for magic items. Named items with dedicated entries show their special behavior directly; remaining catalog entries receive category-specific 1e handling instead of a generic missing-description message. Standard enchanted armor and weapons explain how their pluses apply, while potions, scrolls, rings, charged devices, cursed items, and artifacts use their appropriate sourcebook handling.
 
-The PDFs themselves are **not** committed to this repository or bundled in the APK. They are optional source-reference conveniences; the spell catalog itself is designed to remain useful offline without linked PDFs.
+### Unearthed Arcana source integrity
 
-### Unearthed Arcana / DMG status
+The `unearthedarcana.pdf` supplied to this project contains later/conversion-style terminology and mechanics—including systems not presented as original 1985 AD&D 1e rules. v0.7.0 therefore keeps UA-only catalog entries available but explicitly labels them as **supplied UA variant** material. The app does not silently replace verified PHB/DMG mechanics with those later mechanics.
 
-The supplied Unearthed Arcana PDF contains later revised/variant rules terminology and mechanics rather than matching a clean original 1985 TSR text. Existing UA catalog entries remain available and source-tagged, and v0.6.2 provides native concise descriptions without silently blending later variant mechanics into the verified PHB rules layer.
+### Optional source PDFs
 
-Detailed powers for many magic items require the *Dungeon Masters Guide*. Until a DMG source is supplied, DMG-only entries remain usable for tracking but are explicitly marked as awaiting source-grounded mechanics rather than receiving guessed descriptions.
+PDF linking is now explicitly optional. The Companion is intended to remain useful offline without linked rulebooks. Linking a legally owned PDF simply allows the Rules or spell detail screens to open the cited printed page for verification.
+
+The PDFs themselves are not committed to the repository or bundled in the APK.
 
 ## Spell workflow
 
@@ -60,7 +63,7 @@ For a Cleric:
 4. Prepare one or more copies.
 5. Mark prepared copies **Used** when cast and restore them after rest as appropriate.
 
-The PHB treats multiple memorized copies as separate uses, which is why the app does not model one memorized spell as an endlessly reusable modern-style slot.
+The app models each memorized/prepared copy as a separate use, consistent with the 1e preparation model.
 
 ## Gear workflow
 
@@ -72,13 +75,13 @@ The Gear page uses one inventory record underneath several useful views:
 - **Valuables & Treasure**
 - **Mounts, Tack & Transport**
 
-An equipped magic item can appear in both Equipped and Magic Items while remaining one underlying record. The **Rules** action beside recorded items exposes current source-grounded handling without overwriting the character's personal notes.
+Tap a catalog or recorded magic item and use its **Rules** action to see native mechanics, source category/page range where known, and any source-integrity note. Personal item notes remain separate from the built-in rules text.
 
 ## Backups and updates
 
 Use **Export Saves** before major updates or moving devices. Backups include the current character, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.6.2 should install directly over v0.6.1 and preserve app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.7.0 should install directly over v0.6.2 and preserve app-local data.
 
 ## Build and release policy
 
@@ -88,6 +91,6 @@ The repository is standalone. GitHub Actions installs Gradle 9.7.1, uses JDK 17,
 gradle :app:assembleDebug
 ```
 
-Release builds are serialized. Every user-facing update increments the app version, builds and uploads the APK, publishes the versioned APK into the repository, and creates or updates the matching official GitHub Release.
+Release builds are serialized. Every user-facing update increments the app version, updates the README current-version link, builds and uploads the APK, publishes the versioned APK into the repository, and creates or updates the matching official GitHub Release.
 
 See `DEVELOPMENT.md` for the release definition of done.
