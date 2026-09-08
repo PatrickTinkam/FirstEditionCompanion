@@ -2,25 +2,26 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.9.0
+## Current version: v0.9.1
 
-[Download the official v0.9.0 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.0/FirstEditionCompanion-v0.9.0.apk)
+[Download the official v0.9.1 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.1/FirstEditionCompanion-v0.9.1.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
 ### Features
 - Named character profiles with save/load/new/delete
 - Portable JSON **Export Saves / Import Saves** with Merge and Restore/Replace
-- New **guided character-creation foundation** launched from **New Character**
+- Dedicated **guided character creation** launched from **New Character**
 - Character-creation draft is separate from the active character and can be resumed, kept, or discarded safely
-- Wizard **Back** navigation allows race, class, and ability choices to be revisited without losing the rest of the draft
+- Wizard **Back** navigation allows earlier choices to be changed while later choices are retained and revalidated
 - Race/Subrace choice drives class availability while **all classes remain visible** for learning and details
-- Unavailable classes are clearly marked but still expose full **Class Details**, allowing a player to go back and choose a compatible race
-- Ability-score step supports the four DMG generation methods plus manual entry, with racial modifiers applied from stored raw scores exactly once
+- Unavailable classes are clearly marked but still expose full **Class Details**
+- Ability-score step supports the four DMG generation methods plus manual entry, with raw scores stored separately so modifiers cannot be applied twice
+- DMG-based **Age** step with source-table rolls, manual override, age categories, cumulative aging modifiers, and post-age class requirement checks
+- **Alignment** step keeps all nine alignments visible and marks class-incompatible choices unavailable rather than hiding them
+- Source-aware **Languages** step with automatic racial/class/alignment languages and Intelligence-based additional-language capacity
 - Character-sheet **Race / Subrace dropdown** with native PHB and supplied-UA racial reference data
-- Immediate racial ability-adjustment summary plus detailed **Race Details**
 - Character-sheet **Class / Subclass dropdown** with native PHB and supplied-UA-variant class reference data
-- Immediate class requirements, hit die, alignment, and source summary plus detailed **Class Details**
 - Native **Multi-class / Dual-class Rules** reference and preserved custom/legacy class strings
 - Structured Gear page with Equipped, Carried Gear, Currency, Magic Items, Valuables & Treasure, and Mounts/Tack/Transport
 - Searchable equipment and magic-item catalogs with source labels
@@ -41,19 +42,22 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 
 ## Guided character creation
 
-v0.9.0 begins the dedicated character-creation workflow. **New Character** now opens a separate creation activity instead of immediately clearing the current working sheet.
+v0.9.1 extends the dedicated character-creation workflow. **New Character** opens a separate creation activity instead of clearing the current working sheet.
 
-The current foundation contains four screens:
-1. **Race / Subrace** — choose from the existing native race catalog and open Race Details.
-2. **Class / Subclass** — every built-in class remains visible. Compatible classes are marked available; incompatible classes are marked unavailable but still allow Class Details to be opened.
-3. **Ability Scores** — roll with DMG Methods I–IV or enter scores manually. The draft stores raw scores separately from final racial-adjusted scores and checks the currently encoded class minimum requirements.
-4. **Draft Review** — review the current race, class, and final scores, then save the draft and return to the normal app.
+The current wizard contains seven screens:
+1. **Race / Subrace** — choose from the native race catalog and open Race Details.
+2. **Class / Subclass** — every built-in class remains visible. Compatible classes are marked available; incompatible classes stay visible and still allow Class Details.
+3. **Ability Scores** — roll with DMG Methods I–IV or enter scores manually. Raw scores are kept separately from adjusted values.
+4. **Age** — roll from the DMG race/class starting-age table where a source formula exists, or use a manual/campaign age. The app shows age category, cumulative aging modifiers, and the resulting final scores.
+5. **Alignment** — all nine alignments remain visible and are marked available/unavailable according to the chosen class. The original 1e alignment-language rule is available as a default-on toggle, and divine classes may record a deity/patron.
+6. **Languages** — automatic languages are assembled from race, class, and alignment settings. Additional-language capacity uses final Intelligence plus the race's own PHB restrictions; supplied-UA background-skill language lists remain visibly source-separated.
+7. **Draft Review** — review the current race, class, age, alignment, final scores, and languages, then save the draft and return to the normal app.
 
-This first v0.9.0 slice deliberately does **not** commit a partially built character into the active sheet. The active character remains untouched until the later wizard steps—age, alignment, languages, proficiencies/secondary skills, HP, class skills, spell setup, money, equipment, derived combat values, optional personality/background, and final review—are implemented and can be committed atomically.
+v0.9.1 still deliberately does **not** commit a partially built character into the active sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are implemented and can be committed atomically.
 
 ### Backtracking and changing decisions
 
-The creator is not a one-way questionnaire. The user can go Back and change earlier decisions. Race changes re-evaluate class availability and racial score adjustments from the stored raw ability scores; modifiers are not stacked a second time. A previously chosen class can remain selected so the app can explain that it is now unavailable instead of silently deleting the player's choice.
+The creator is not a one-way questionnaire. The user can go Back and change earlier decisions. Race changes re-evaluate class availability and racial score adjustments; class changes re-evaluate later requirements; age changes recalculate final scores; alignment and language choices are preserved and rechecked where possible. The wizard flags invalid downstream choices rather than silently deleting them.
 
 ## Character creation / race workflow
 
@@ -95,11 +99,11 @@ Normal-sheet class selection deliberately does not rewrite stored HP, THAC0, sav
 
 ## Source-grounded rules
 
-The supplied AD&D 1e *Players Handbook* remains the primary player-facing source for core races, classes, spells, and character-creation rules. The supplied *Dungeon Masters Guide* supplies the ability-generation methods and the broader DM-facing mechanics layer.
+The supplied AD&D 1e *Players Handbook* remains the primary player-facing source for core races, classes, spells, languages, alignments, and character-operation rules. The supplied *Dungeon Masters Guide* supplies the ability-generation methods, starting-age tables, aging rules, and broader DM-facing mechanics layer.
 
 ### Unearthed Arcana source integrity
 
-The supplied `unearthedarcana.pdf` contains later/conversion-style terminology and mechanics. UA entries are part of the app's AD&D 1e content group but remain visibly source-labeled so variant mechanics are not silently substituted for verified PHB/DMG core rules.
+The supplied `unearthedarcana.pdf` is included as part of the app's AD&D 1e content group. Where its supplied mechanics use later/conversion-style terminology or differ from verified PHB/DMG core rules, those entries remain visibly source-labeled rather than silently replacing the core path.
 
 ### Optional source PDFs
 
@@ -125,7 +129,7 @@ For a Cleric:
 
 Use **Export Saves** before major updates or moving devices. Backups include the current character, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.0 should install directly over v0.8.1 and preserve app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.1 should install directly over v0.9.0 and preserve app-local data.
 
 ## Build and release policy
 
