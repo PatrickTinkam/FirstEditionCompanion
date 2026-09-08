@@ -22,8 +22,8 @@ android {
         applicationId 'com.patricktinkam.firsteditioncompanion'
         minSdk 26
         targetSdk 35
-        versionCode 12
-        versionName '0.8.1-prototype'
+        versionCode 13
+        versionName '0.9.0-prototype'
     }
 
     compileOptions {

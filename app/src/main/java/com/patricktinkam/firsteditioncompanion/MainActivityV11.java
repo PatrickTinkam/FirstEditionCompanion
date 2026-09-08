@@ -1,26 +1,27 @@
 package com.patricktinkam.firsteditioncompanion;
 
 import android.app.*;
+import android.content.*;
 import android.text.*;
 import android.view.*;
 import android.widget.*;
 import org.json.*;
 import java.util.*;
 
-/** v0.8.1: class/subclass selector and detailed class reference. */
+/** v0.9.0: class/subclass selector plus guided character-creation launch point. */
 public class MainActivityV11 extends MainActivityV10 {
   ClassData.Entry selectedClass;
   int selectedClassLevel=1;
 
   @Override JSONObject makeBackup(){
     JSONObject o=super.makeBackup();
-    try{o.put("appVersion","0.8.1");}catch(Exception ignored){}
+    try{o.put("appVersion","0.9.0");}catch(Exception ignored){}
     return o;
   }
 
   @Override void shell(){
     LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(BG);setContentView(root);
-    TextView title=t("FIRST EDITION COMPANION  •  v0.8.1",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
+    TextView title=t("FIRST EDITION COMPANION  •  v0.9.0",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
     float w=getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density;boolean wide=w>=700;
     LinearLayout body=new LinearLayout(this);body.setOrientation(wide?LinearLayout.HORIZONTAL:LinearLayout.VERTICAL);root.addView(body,new LinearLayout.LayoutParams(-1,0,1));
     LinearLayout nav=new LinearLayout(this);nav.setOrientation(wide?LinearLayout.VERTICAL:LinearLayout.HORIZONTAL);
@@ -86,7 +87,7 @@ public class MainActivityV11 extends MainActivityV10 {
     TextView req=t("",13,GOLD,true);card.addView(req);
     TextView hit=t("",12,TXT,false);card.addView(hit);
     TextView source=t("",12,MUT,false);card.addView(source);
-    TextView note=t("Class selection is informational and persistent. It does not silently change HP, THAC0, saving throws, spell tracks, alignment, or ability scores; those will be automated only when we can do so without damaging existing characters.",11,MUT,false);card.addView(note);
+    TextView note=t("Class selection on the normal sheet remains informational and persistent. Guided automation lives in New Character so existing characters are not silently rewritten.",11,MUT,false);card.addView(note);
 
     LinearLayout actions=new LinearLayout(this);
     Button details=b("Class Details");actions.addView(details,new LinearLayout.LayoutParams(0,dp(46),1));
@@ -117,6 +118,10 @@ public class MainActivityV11 extends MainActivityV10 {
     custom.setOnClickListener(v->customClassDialog());
   }
 
+  @Override void newCharacter(){
+    startActivity(new Intent(this,CharacterCreationActivity.class));
+  }
+
   @Override void sheet(LinearLayout c){
     LinearLayout a=card("Character");
     field(a,"Name","name","New Character",false);
@@ -130,7 +135,7 @@ public class MainActivityV11 extends MainActivityV10 {
     field(v,"Current HP","hp","8",true);field(v,"Max HP","hpmax","8",true);field(v,"Armor Class","ac","10",true);field(v,"THAC0","thac0","20",true);add(c,v);
 
     LinearLayout ab=card("Ability Scores");
-    ab.addView(t("Use the racial adjustments and class requirements shown above when establishing starting scores. Existing characters are not automatically rewritten.",12,MUT,false));
+    ab.addView(t("Use New Character for guided race/class/ability setup. Existing characters are not automatically rewritten when these normal-sheet selectors change.",12,MUT,false));
     for(String k:new String[]{"STR","INT","WIS","DEX","CON","CHA"})field(ab,k,k,"10",true);add(c,ab);
 
     LinearLayout sv=card("Saving Throws");String[][] saves={{"Poison / Death","save1"},{"Petrify / Poly","save2"},{"Rod / Staff / Wand","save3"},{"Breath Weapon","save4"},{"Spell","save5"}};for(String[] q:saves)field(sv,q[0],q[1],"20",true);add(c,sv);
