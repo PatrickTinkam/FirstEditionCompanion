@@ -1,28 +1,30 @@
-# First Edition Companion v0.8.1
+# First Edition Companion v0.9.0
 
-v0.8.1 continues the character-creation refinement pass by replacing the free-form class field with a native class/subclass selector and detailed offline class reference.
+v0.9.0 begins the dedicated guided character-creation workflow while keeping existing characters protected.
 
-## Character class changes
-- Replaced the free-form **Class(es)** field with a **Class / Subclass** dropdown.
-- Added a separate class-level field while continuing to store the combined class/level value in the existing character data format for backward compatibility.
-- Added PHB entries for Cleric, Druid, Fighter, Paladin, Ranger, Magic-User, Illusionist, Thief, Assassin, Monk, and the optional PHB Appendix II Bard.
-- Added the five fully described classes from the supplied UA-variant source: Cloistered Cleric, Anti-Paladin, Duelist, Necromancer, and Psionicist.
-- Selecting a class immediately displays its minimum requirements/prime requisite, hit die, alignment restriction, and source.
-- Added **Class Details**, a native/offline reference covering armor and weapons, spellcasting model, major class abilities, high-level abilities/restrictions, and advancement notes.
-- Added a native **Multi-class / Dual-class Rules** reference summarizing the PHB distinction between nonhuman multiclassing and human dual-classing.
-- Existing custom or multiclass class strings are preserved as legacy entries rather than overwritten.
-- Added **Custom / Multi-class…** for campaign-specific or hand-entered combinations.
-- Class selection does not automatically rewrite HP, THAC0, saving throws, alignment, spell tracks, or ability scores, preventing existing characters from being unintentionally changed.
+## Guided creation foundation
+- **New Character** now opens a separate full-screen creation activity instead of immediately clearing the working sheet.
+- Added a persistent `CharacterDraft` so in-progress creation is isolated from the active character.
+- Added Back navigation and draft resume/keep/discard handling.
+- Race selection uses the existing native race catalog and keeps **Race Details** available.
+- The class screen keeps **every built-in class visible**. Classes unavailable to the selected race are clearly marked but still expose **Class Details**, so a player can learn about the class and go back to choose a compatible race.
+- Changing race re-evaluates class availability instead of silently deleting the previous class choice.
+- Added machine-readable racial ability modifiers and core class minimum-score validation for the wizard.
+- Ability scores are stored as raw values separately from final racial-adjusted values so racial modifiers cannot be accidentally applied twice.
+- Added an obvious **ROLL** workflow supporting all four DMG character ability-generation methods plus manual entry.
+- DMG Method IV displays twelve complete generated sets and lets the player choose one.
+- Added a foundation review screen showing race, class, and final ability scores.
 
-## Source integrity
-Core class information is grounded in the supplied AD&D 1e Players Handbook, including class requirements, hit dice, alignment restrictions, class abilities, spellcasting, armor/weapon limits, and multiclass/dual-class procedures.
+## Safety / compatibility
+- v0.9.0 deliberately stops before committing a partially built character. The existing active character remains untouched while the remaining creation steps are added.
+- Existing v0.8.1 character profiles, spell tracks, inventory, and normal Sheet selectors remain compatible.
+- The normal Sheet still permits manual editing and does not silently recalculate existing characters.
 
-The supplied `unearthedarcana.pdf` contains later/conversion-style mechanics. Its class entries are therefore labeled **supplied UA variant** in the app. The file references additional names such as Barbarian and Cavalier but does not provide full standalone class descriptions for them in the supplied source, so v0.8.1 does not invent missing mechanics.
-
-All built-in descriptions are paraphrased table-use summaries stored natively in the APK.
+## Next creation slices
+The next guided-creation updates will extend the same draft with age, alignment, languages, weapon proficiencies, secondary skills, health, class-specific skills, spell setup, starting money, equipment, derived combat values, the optional personality/background section, and the final **Finish Character** commit into the normal sheet.
 
 ## Updating
-v0.8.1 uses the same stable prototype signing key as previous prototype releases and should install directly over v0.8.0 while preserving local character data. Export Saves before major updates is still recommended.
+v0.9.0 uses the same stable prototype signing key as previous prototype releases and should install directly over v0.8.1 while preserving local character data. Export Saves before major updates is still recommended.
 
 ## Installation
-Download the attached `FirstEditionCompanion-v0.8.1.apk` and install it on Android.
+Download the attached `FirstEditionCompanion-v0.9.0.apk` and install it on Android.
