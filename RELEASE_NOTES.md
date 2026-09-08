@@ -1,39 +1,26 @@
-# First Edition Companion v0.9.1
+# First Edition Companion v0.9.2
 
-v0.9.1 extends guided character creation from Race/Class/Abilities through **Age, Alignment, and Languages**, while keeping the in-progress character isolated from the active sheet.
+v0.9.2 fixes the missing entry point to the guided character creator and makes the installed app version easy to verify from inside the app.
 
-## Age
-- Added the DMG starting-age formulas for supported human and nonhuman race/class paths, with an obvious **ROLL AGE** action and manual/campaign override.
-- Added DMG age categories and cumulative aging ability adjustments.
-- Age effects are recalculated from stored raw scores, so going Back and changing race/class cannot stack modifiers twice.
-- Where the original DMG has no exact supplied-UA race/class entry, the app either labels a transparent parent/racial-stock baseline or requires a manual campaign age instead of inventing a rule.
-- Final ability scores are rechecked against class requirements after age adjustments.
+## Character Profiles / creator entry
+- Restored the **Character Profiles** controls that were accidentally hidden by the v0.9.x Sheet override.
+- Added a prominent full-width **Create New Character** button at the top of the Sheet.
+- **Create New Character** launches the separate guided character-creation activity instead of editing the normal Sheet in place.
+- Restored visible **Save Character**, **Load Character**, and **Delete Saved Character** controls.
+- Existing active-character data remains untouched while a creation draft is in progress.
 
-## Alignment
-- Added all nine alignments as visible choices.
-- Class-incompatible alignments remain visible but are clearly marked unavailable, matching the learning-oriented Race/Class design.
-- Added PHB restrictions for Cleric, Druid, Paladin, Ranger, Thief, Assassin, Monk, Bard, and unrestricted core classes.
-- Added visibly source-separated supplied-UA restrictions for Cloistered Cleric, Anti-Paladin, Duelist, Necromancer, and Psionicist.
-- Added the original 1e alignment-language rule as a default-on campaign toggle.
-- Divine classes can optionally record a deity/patron in the draft.
+## Visible version confirmation
+- Added **App Version: v0.9.2** directly in the Character Profiles card on the Sheet.
+- The main title bar and guided creator title also display v0.9.2.
+- This gives testers a quick way to confirm that the newest APK is actually installed.
 
-## Languages
-- Added automatic racial languages plus class/alignment languages where applicable.
-- Added additional-language capacity from final Intelligence, with PHB racial limits taking priority over the general Intelligence table.
-- Added a multi-select additional-language picker and validation against available slots.
-- Supplied-UA races that use background-skill-style language choices keep their source-specific language lists without the app fabricating a PHB-style numeric slot count.
+## Guided character creation
+The current creator still contains seven steps: Race/Subrace, Class/Subclass, Ability Scores, Age, Alignment, Languages, and Draft Review. Backtracking, class availability markers, source-aware details, DMG age handling, alignment validation, and language handling from v0.9.1 are unchanged.
 
-## Backtracking and safety
-- The wizard now contains seven screens: Race, Class, Ability Scores, Age, Alignment, Languages, and Draft Review.
-- Back navigation continues to preserve later choices and revalidate them rather than silently deleting them.
-- The active character remains untouched; this release still saves an in-progress `CharacterDraft` until the remaining creation steps and atomic **Finish Character** commit are implemented.
-- Existing saved characters, spell tracks, inventory, and normal Sheet editing behavior remain unchanged.
-
-## Next creation slices
-Next: weapon proficiencies, secondary skills, health, class-specific skills, spell setup, starting money/equipment, optional personality/background, derived combat values, and the final review/Finish Character commit.
+The wizard still deliberately stops at Draft Review and does not commit a partial character into the active sheet. The remaining creation steps and final atomic **Finish Character** commit will be added in later releases.
 
 ## Updating
-v0.9.1 uses the same stable prototype signing key and should install directly over v0.9.0 while preserving local data. Export Saves before major updates is still recommended.
+v0.9.2 uses the same stable prototype signing key and should install directly over v0.9.1 while preserving local data. Export Saves before major updates is still recommended.
 
 ## Installation
-Download the attached `FirstEditionCompanion-v0.9.1.apk` and install it on Android.
+Download the attached `FirstEditionCompanion-v0.9.2.apk` and install it on Android.
