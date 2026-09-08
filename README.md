@@ -2,9 +2,9 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.6.0
+## Current version: v0.6.1
 
-[Download the official v0.6.0 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.6.0/FirstEditionCompanion-v0.6.0.apk)
+[Download the official v0.6.1 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.6.1/FirstEditionCompanion-v0.6.1.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
@@ -18,6 +18,7 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - Searchable Cleric, Druid, Magic-User, and Illusionist spell catalogs
 - Separate Magic-User/Illusionist **Spellbook** and Cleric/Druid **Available Spells** from prepared/memorized copies
 - PHB spell details with range, duration, area, components, casting time, saving throw, source page, and concise mechanics where matched
+- Native/offline spell descriptions throughout the catalog, including fallback summaries for entries without a full structured rules digest
 - New **Rules** tab with source-grounded PHB table references
 - Optional local PHB/UA/DMG PDF linking and in-app PHB source-page viewing
 - Combat dashboard with HP, AC, THAC0 helper, attack/damage rolls, saves, and PHB combat references
@@ -26,7 +27,7 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 
 ## Source-grounded rules
 
-v0.6.0 begins the book-grounding pass using the supplied 1978 AD&D 1e *Players Handbook*. The app's PHB spell reference follows the PHB's own presentation fields: type/school, level, range, duration, area of effect, components, casting time, saving throw, and effect.
+v0.6.1 continues the book-grounding pass using the supplied 1978 AD&D 1e *Players Handbook*. The app's PHB spell reference follows the PHB's own presentation fields: type/school, level, range, duration, area of effect, components, casting time, saving throw, and effect.
 
 The Rules tab summarizes table-use mechanics for spell preparation, spell interruption, money, armor/shields, weapon proficiency, encumbrance, movement, light, surprise, turning undead, AC/saves, damage, healing, and experience. Each PHB reference includes a printed page number.
 
@@ -34,11 +35,11 @@ The Rules tab summarizes table-use mechanics for spell preparation, spell interr
 
 On **Rules → Your Rulebooks**, use Android's system file picker to link your legally owned PDF copies. The Companion stores persistent read access to the selected document URI on that device. PHB references can then open the cited source page directly in the app.
 
-The PDFs themselves are **not** committed to this repository or bundled in the APK.
+The PDFs themselves are **not** committed to this repository or bundled in the APK. They are optional source-reference conveniences; the spell catalog itself is designed to remain useful offline without linked PDFs.
 
 ### Unearthed Arcana / DMG status
 
-The supplied Unearthed Arcana PDF contains later revised/variant rules terminology and mechanics rather than matching a clean original 1985 TSR text. Existing UA catalog entries remain available and source-tagged, but v0.6 does not silently blend those variant mechanics into the verified PHB rules layer.
+The supplied Unearthed Arcana PDF contains later revised/variant rules terminology and mechanics rather than matching a clean original 1985 TSR text. Existing UA catalog entries remain available and source-tagged, and v0.6.1 provides native concise descriptions without silently blending later variant mechanics into the verified PHB rules layer.
 
 Detailed powers for many magic items require the *Dungeon Masters Guide*. Until a DMG source is supplied, DMG-only entries remain usable for tracking but are explicitly marked as awaiting source-grounded mechanics rather than receiving guessed descriptions.
 
@@ -71,7 +72,7 @@ An equipped magic item can appear in both Equipped and Magic Items while remaini
 
 Use **Export Saves** before major updates or moving devices. Backups include the current character, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.6.0 should install directly over v0.5.0 and preserve app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.6.1 should install directly over v0.6.0 and preserve app-local data.
 
 ## Build and release policy
 
