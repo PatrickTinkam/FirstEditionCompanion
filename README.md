@@ -2,15 +2,18 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.7.1
+## Current version: v0.8.0
 
-[Download the official v0.7.1 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.7.1/FirstEditionCompanion-v0.7.1.apk)
+[Download the official v0.8.0 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.8.0/FirstEditionCompanion-v0.8.0.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
 ### Features
 - Named character profiles with save/load/new/delete
 - Portable JSON **Export Saves / Import Saves** with Merge and Restore/Replace
+- Character-sheet **Race / Subrace dropdown** with native PHB and supplied-UA racial reference data
+- Immediate racial ability-adjustment summary plus a detailed **Race Details** view covering racial abilities, resistances, vision, languages, class/multiclass notes, and restrictions
+- Legacy/custom race values are preserved and a **Custom Race** option remains available for campaign-specific ancestries
 - Structured Gear page with Equipped, Carried Gear, Currency, Magic Items, Valuables & Treasure, and Mounts/Tack/Transport
 - Searchable equipment and magic-item catalogs with source labels
 - Equipment slots, quantities, optional charges/uses, and personal item notes
@@ -28,19 +31,29 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - Integrated dice roller
 - Responsive navigation for folded and unfolded phones
 
+## Character creation / race workflow
+
+v0.8.0 begins a focused character-creation refinement pass. The old free-form **Race** text field is now a source-aware dropdown.
+
+Built-in PHB choices include Human, standard/hill and mountain Dwarves, High Elves, Surface Gnomes, Half-Elves, Half-Orcs, and Halfling variants including Hairfoot, Stout, Tallfellow, and an unspecified/mixed PHB baseline. The PHB racial details are stored natively and cover the race's ability-score adjustments and the racial capabilities most relevant during play.
+
+The supplied Unearthed Arcana variant expands the selector with Gray/Duergar Dwarves, Gray, Wood/Sylvan, Wild/Grugach, and Dark/Drow Elves, Deep/Svirfneblin Gnomes, several Half-Elf ancestry variants, and the Half-Ogre. Drow are split into male and female entries because the supplied variant gives them different starting ability adjustments.
+
+Selecting a race updates the short **Ability adjustments** line immediately. Tapping **Race Details** opens the complete built-in racial summary. The app intentionally does not mutate stored STR/INT/WIS/DEX/CON/CHA values automatically when the dropdown changes, so existing characters cannot accidentally have racial modifiers applied twice. Use the displayed modifier when establishing or correcting the character's final starting scores.
+
+Older or campaign-specific race strings are preserved as **Custom / legacy** entries instead of being destroyed during upgrade. The **Custom…** button can still be used for house-ruled races.
+
 ## Source-grounded rules
 
-v0.7.1 fixes a v0.7.0 routing bug that allowed nonmagical DMG/UA catalog entries to fall back to an obsolete “source PDF required” message. Every built-in gear and treasure entry now routes through a native offline description path.
+The supplied AD&D 1e *Players Handbook* remains the primary player-facing spell, class, and core-race source. PHB race material includes racial ability adjustments, vision, resistance/saving-throw benefits, languages, racial combat/detection abilities, and class/multiclass restrictions where applicable.
 
-The supplied AD&D 1e *Players Handbook* remains the primary player-facing spell and class source. PHB spell entries retain the book's structured fields—type/school, range, duration, area of effect, components, casting time, saving throw, reversibility, and source page—plus a native offline effect digest.
-
-The supplied *Dungeon Masters Guide* fills the large rules/mechanics layer for treasure, magic items, combat adjudication, saving throws, charges, curses, artifact handling, and related referee procedures. DMG gems and jewelry use their value-generation concepts directly in the built-in summaries; synthetic tracking categories such as Art Object clearly state when the books do not define one universal stat block and instead require a DM-assigned/appraised value.
+The supplied *Dungeon Masters Guide* fills the large rules/mechanics layer for treasure, magic items, combat adjudication, saving throws, charges, curses, artifact handling, and related referee procedures.
 
 Magic items show native mechanics directly. Named items with dedicated entries show their special behavior; remaining catalog entries receive category-specific 1e handling instead of a generic missing-description message. Standard enchanted armor and weapons explain how their pluses apply, while potions, scrolls, rings, charged devices, cursed items, and artifacts use their appropriate sourcebook handling.
 
 ### Unearthed Arcana source integrity
 
-The `unearthedarcana.pdf` supplied to this project contains later/conversion-style terminology and mechanics—including systems not presented as original 1985 AD&D 1e rules. UA-only catalog entries remain available but are explicitly treated as **supplied UA variant** material. The app does not silently replace verified PHB/DMG mechanics with those later mechanics.
+The `unearthedarcana.pdf` supplied to this project contains later/conversion-style terminology and mechanics—including systems not presented as original 1985 AD&D 1e rules. UA-only race and catalog entries remain available but are explicitly treated as **supplied UA variant** material. The app does not silently replace verified PHB/DMG mechanics with those later mechanics.
 
 ### Optional source PDFs
 
@@ -82,7 +95,7 @@ Tap a catalog or recorded item and use its **Rules** action to see its native of
 
 Use **Export Saves** before major updates or moving devices. Backups include the current character, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.7.1 should install directly over v0.7.0 and preserve app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.8.0 should install directly over v0.7.1 and preserve app-local data.
 
 ## Build and release policy
 
