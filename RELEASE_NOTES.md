@@ -1,34 +1,39 @@
-# First Edition Companion v0.9.4
+# First Edition Companion v0.9.5
 
-v0.9.4 separates race/class compatibility from ability-score qualification in the guided character creator and fixes related validation UX.
+v0.9.5 adds class-aware ability-score distribution on top of the v0.9.4 qualification-order fix.
 
-## Class selection
-- The Class step now checks **race compatibility only**.
-- Race-compatible classes are labeled clearly as race-compatible while their ability qualification remains pending.
-- Race-restricted classes remain visible for learning and **Class Details**, but are labeled as a true race restriction rather than a failed ability check.
-- The screen explicitly explains that ability rolls cannot override a core race/class restriction.
-- Exact class requirements remain visible before rolling so players know what minimum scores they need to aim for.
-- A new draft defaults to the first race-compatible class instead of accidentally landing on an unavailable first item in the list.
+## Rolled score pool
+- **DMG Method I** and **DMG Method II** now create a persistent six-score pool instead of immediately locking values into STR/INT/WIS/DEX/CON/CHA.
+- Each ability uses a dropdown containing only score values still available from the shared pool.
+- Assigning a value consumes one copy from the pool; changing or clearing that slot returns its previous value.
+- Duplicate numerical rolls are tracked as separate copies rather than collapsing into one value.
+- The rolled pool is stored in the character draft so Back navigation, fold/unfold, rotation, or draft resume do not lose the original six rolls.
 
-## Ability-score qualification
-- Actual class minimum-score enforcement happens after ability rolling/distribution and after racial adjustments are applied.
-- The Ability Scores step now has a dedicated **Class Qualification Check** showing the selected class and its requirements.
-- Continue remains disabled until all six scores are present and the current race/class/ability requirements pass.
-- The Rules Check now refreshes live while manually editing or rearranging scores instead of displaying stale results.
-- Age adjustments still trigger a second final-score qualification check on the Age step, so later modifiers cannot silently invalidate a class requirement.
+## Auto Distribute for Class
+- After Methods I or II roll a pool, the player can choose **Auto Distribute for Class** or assign every score manually.
+- Auto Distribution first tries to satisfy all encoded class minimums after racial modifiers, then favors prime/principal abilities.
+- Recognized multiclass/dual-class strings are evaluated as a combined requirement set so one class is not optimized at the expense of another.
+- Auto Distribution never locks the scores; the player can still change every assignment afterward with the dropdowns.
+- If the rolled pool cannot satisfy all encoded requirements, the app uses the closest class-focused arrangement and tells the player that the character still does not qualify.
 
-## Related rule-order review
-- Race/class legality remains separate from ability eligibility, matching core 1e structure.
-- Ability-dependent nonhuman class level limits are treated as advancement limits, not as a reason to reject an otherwise legal level-1 class choice during class selection.
-- Existing drafts, saved characters, spell tracks, gear, and profile data are not rewritten by this change.
+## Method integrity
+- **Method III** results stay tied to the individual abilities they were rolled for.
+- **Method IV** keeps the chosen complete set in STR/INT/WIS/DEX/CON/CHA order.
+- **Manual Entry** remains fully editable.
+
+## Qualification timing carried forward from v0.9.4
+- The Class step checks race/class compatibility only and shows ability minimums as advance guidance.
+- Actual ability-score qualification happens after rolling/distribution and racial adjustments.
+- Age applies its modifiers afterward and performs another final class-requirement check.
+- Manual typing continues to refresh the visible qualification result immediately.
 
 ## Version confirmation
-- Main app title: **v0.9.4**
-- Character Profiles card: **App Version: v0.9.4**
-- Guided creator title: **v0.9.4**
+- Main app title: **v0.9.5**
+- Character Profiles card: **App Version: v0.9.5**
+- Guided creator title: **v0.9.5**
 
 ## Updating
-v0.9.4 uses the same stable prototype signing key and should install directly over v0.9.3 while preserving app-local data. Export Saves before major updates is still recommended.
+v0.9.5 uses the same stable prototype signing key and should install directly over v0.9.4 while preserving app-local data. Existing saved characters are not rewritten by this change.
 
 ## Installation
-Download the attached `FirstEditionCompanion-v0.9.4.apk` and install it on Android.
+Download the attached `FirstEditionCompanion-v0.9.5.apk` and install it on Android.
