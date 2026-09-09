@@ -2,9 +2,9 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.9.5
+## Current version: v0.9.6
 
-[Download the official v0.9.5 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.5/FirstEditionCompanion-v0.9.5.apk)
+[Download the official v0.9.6 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.6/FirstEditionCompanion-v0.9.6.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
@@ -19,12 +19,14 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - Race/Subrace choice drives race/class compatibility while all classes remain visible for learning and details
 - Class selection separates **race compatibility** from **ability-score qualification**
 - Class minimum ability requirements are shown during class selection but enforced only after ability rolling/distribution
-- DMG Methods I and II now produce a persistent six-score pool that can be manually assigned with dropdowns
+- DMG Methods I and II produce a persistent six-score pool that can be manually assigned with dropdowns
 - Assigned pool values disappear from other ability selectors until returned/reassigned; duplicate rolls are tracked as separate copies
 - **Auto Distribute for Class** optimizes the rolled pool for the selected class or recognized multiclass/dual-class combination, while still allowing manual changes afterward
 - Method III results remain tied to their individual abilities and Method IV chosen sets remain in order
 - Manual entry remains available and the live Class Qualification Check updates as scores change
 - Raw scores are kept separately so racial and age modifiers cannot be applied twice
+- **Why? • Source** buttons provide source-grounded explanations for race/class restrictions, class ability requirements, age checks, alignment restrictions, and language-capacity rules
+- Source-detail dialogs identify the governing PHB/DMG/supplied-UA source, section, and verified page number where available
 - DMG-based **Age** step with source-table rolls, manual override, age categories, cumulative aging modifiers, and post-age class requirement checks
 - **Alignment** step keeps all nine alignments visible and marks class-incompatible choices unavailable rather than hiding them
 - Source-aware **Languages** step with automatic racial/class/alignment languages and Intelligence-based additional-language capacity
@@ -54,6 +56,19 @@ The current wizard contains seven screens:
 6. **Languages** — automatic languages plus additional-language capacity based on final Intelligence and racial restrictions.
 7. **Draft Review** — review race, class, age, alignment, final scores, and languages, then save the draft and return.
 
+### Rules warnings and source details
+
+Rules-sensitive creator screens now expose a small **Why? • Source** button. It opens a native offline dialog explaining why the rule/check applies to the current character and identifies the governing book and source location. The first retrofit covers:
+- Race/class restrictions
+- Class ability-score requirements
+- Age/aging qualification checks
+- Alignment restrictions
+- Additional-language capacity
+
+For core PHB/DMG rules, verified page references are included where available. Supplied-UA-variant material remains clearly labeled as variant. The app preserves exact mechanical facts while using concise native summaries instead of requiring the user to open a PDF.
+
+This is now a project-wide UI standard: future rules-driven warnings in proficiencies, equipment, spells, magic items, advancement, and other systems should receive the same source-details affordance whenever the source supports one.
+
 ### Class eligibility timing
 
 The wizard deliberately separates two different 1e rules:
@@ -72,7 +87,7 @@ The player can also press **Auto Distribute for Class**. The optimizer first tri
 
 The creator is not a one-way questionnaire. Going Back preserves later choices where possible and revalidates them instead of silently deleting them.
 
-v0.9.5 still deliberately does **not** commit a partially built character into the active play sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are complete and can be committed atomically.
+v0.9.6 still deliberately does **not** commit a partially built character into the active play sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are complete and can be committed atomically.
 
 ## Sheet behavior
 
@@ -96,7 +111,7 @@ For a Cleric, the full built-in Cleric spell list is available automatically, gr
 
 Use **Export Saves** before major updates or moving devices. Backups include current-character data, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.5 should install directly over v0.9.4 while preserving app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.6 should install directly over v0.9.5 while preserving app-local data.
 
 ## Build and release policy
 
