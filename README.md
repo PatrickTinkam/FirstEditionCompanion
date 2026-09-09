@@ -2,9 +2,9 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.9.4
+## Current version: v0.9.5
 
-[Download the official v0.9.4 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.4/FirstEditionCompanion-v0.9.4.apk)
+[Download the official v0.9.5 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.5/FirstEditionCompanion-v0.9.5.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
@@ -19,8 +19,12 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - Race/Subrace choice drives race/class compatibility while all classes remain visible for learning and details
 - Class selection separates **race compatibility** from **ability-score qualification**
 - Class minimum ability requirements are shown during class selection but enforced only after ability rolling/distribution
-- Ability-score Rules Check updates live while scores are manually edited
-- Ability-score step supports DMG Methods I–IV plus manual entry, with raw scores kept separately so modifiers cannot be applied twice
+- DMG Methods I and II now produce a persistent six-score pool that can be manually assigned with dropdowns
+- Assigned pool values disappear from other ability selectors until returned/reassigned; duplicate rolls are tracked as separate copies
+- **Auto Distribute for Class** optimizes the rolled pool for the selected class or recognized multiclass/dual-class combination, while still allowing manual changes afterward
+- Method III results remain tied to their individual abilities and Method IV chosen sets remain in order
+- Manual entry remains available and the live Class Qualification Check updates as scores change
+- Raw scores are kept separately so racial and age modifiers cannot be applied twice
 - DMG-based **Age** step with source-table rolls, manual override, age categories, cumulative aging modifiers, and post-age class requirement checks
 - **Alignment** step keeps all nine alignments visible and marks class-incompatible choices unavailable rather than hiding them
 - Source-aware **Languages** step with automatic racial/class/alignment languages and Intelligence-based additional-language capacity
@@ -44,7 +48,7 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 The current wizard contains seven screens:
 1. **Race / Subrace** — choose from the native race catalog and open Race Details.
 2. **Class / Subclass** — every built-in class remains visible. The screen checks only whether the chosen race can use that class; exact class ability requirements are displayed but are not treated as pass/fail yet.
-3. **Ability Scores** — roll with DMG Methods I–IV or enter/rearrange scores manually. After racial adjustments, the app performs the actual selected-class qualification check and blocks Continue until the current requirements are met.
+3. **Ability Scores** — choose a DMG method or manual entry. Methods I and II create a six-score pool that can be assigned manually or auto-distributed for the selected class/class combination. After racial adjustments, the app performs the actual class qualification check and blocks Continue until the current requirements are met.
 4. **Age** — roll from the DMG race/class starting-age table where supported, or use a manual/campaign age; age category and cumulative aging modifiers are shown and final class requirements are checked again.
 5. **Alignment** — all nine alignments remain visible and are marked available/unavailable according to class.
 6. **Languages** — automatic languages plus additional-language capacity based on final Intelligence and racial restrictions.
@@ -58,9 +62,17 @@ The wizard deliberately separates two different 1e rules:
 
 Some nonhuman class level limits can also vary with ability scores. Those are advancement limits rather than a reason to reject an otherwise legal level-1 class choice during the Class step.
 
+### Ability-score distribution
+
+For **DMG Method I** and **DMG Method II**, the creator stores the six kept scores as a shared pool. Each ability has a dropdown showing only values that are still available. Assigning a value consumes one copy; changing or clearing the slot returns its previous value to the pool. Duplicate numerical results are counted separately.
+
+The player can also press **Auto Distribute for Class**. The optimizer first tries to satisfy every encoded minimum after racial modifiers, then favors prime/principal abilities. If the stored selection represents multiple recognized classes, their requirements are combined so one class is not optimized at the expense of another. Auto Distribution never locks the result; every assignment can still be changed manually.
+
+**Method III** remains ability-specific, because that method rolls separately for each ability. **Method IV** remains a complete in-order set selection. **Manual Entry** allows free typing.
+
 The creator is not a one-way questionnaire. Going Back preserves later choices where possible and revalidates them instead of silently deleting them.
 
-v0.9.4 still deliberately does **not** commit a partially built character into the active play sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are complete and can be committed atomically.
+v0.9.5 still deliberately does **not** commit a partially built character into the active play sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are complete and can be committed atomically.
 
 ## Sheet behavior
 
@@ -84,7 +96,7 @@ For a Cleric, the full built-in Cleric spell list is available automatically, gr
 
 Use **Export Saves** before major updates or moving devices. Backups include current-character data, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.4 should install directly over v0.9.3 while preserving app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.5 should install directly over v0.9.4 while preserving app-local data.
 
 ## Build and release policy
 
