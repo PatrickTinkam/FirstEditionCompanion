@@ -12,6 +12,8 @@ public final class CharacterDraft {
   public String className="";
   public String rollMethod="Manual";
   public final int[] rawScores={0,0,0,0,0,0};
+  /** Six rolled values waiting to be assigned for methods that allow free arrangement. */
+  public final ArrayList<Integer> rolledPool=new ArrayList<>();
 
   public String ageMode="DMG roll";
   public int age=0;
@@ -21,7 +23,7 @@ public final class CharacterDraft {
   public final ArrayList<String> chosenLanguages=new ArrayList<>();
 
   public boolean hasMeaningfulProgress(){
-    if(!raceName.isEmpty()||!className.isEmpty()||age>0||!alignment.isEmpty()||!deity.isEmpty()||!chosenLanguages.isEmpty())return true;
+    if(!raceName.isEmpty()||!className.isEmpty()||age>0||!alignment.isEmpty()||!deity.isEmpty()||!chosenLanguages.isEmpty()||!rolledPool.isEmpty())return true;
     for(int v:rawScores)if(v>0)return true;
     return false;
   }
@@ -29,7 +31,7 @@ public final class CharacterDraft {
   public JSONObject toJson(){
     JSONObject o=new JSONObject();
     try{
-      o.put("schema",2);
+      o.put("schema",3);
       o.put("step",step);
       o.put("raceName",raceName);
       o.put("className",className);
@@ -37,6 +39,9 @@ public final class CharacterDraft {
       JSONArray a=new JSONArray();
       for(int v:rawScores)a.put(v);
       o.put("rawScores",a);
+      JSONArray pool=new JSONArray();
+      for(int v:rolledPool)pool.put(v);
+      o.put("rolledPool",pool);
       o.put("ageMode",ageMode);
       o.put("age",age);
       o.put("alignment",alignment);
@@ -60,6 +65,10 @@ public final class CharacterDraft {
       d.rollMethod=o.optString("rollMethod","Manual");
       JSONArray a=o.optJSONArray("rawScores");
       if(a!=null)for(int i=0;i<Math.min(6,a.length());i++)d.rawScores[i]=a.optInt(i,0);
+      JSONArray pool=o.optJSONArray("rolledPool");
+      if(pool!=null)for(int i=0;i<pool.length();i++){
+        int v=pool.optInt(i,0);if(v>0)d.rolledPool.add(v);
+      }
       d.ageMode=o.optString("ageMode","DMG roll");
       d.age=Math.max(0,o.optInt("age",0));
       d.alignment=o.optString("alignment","");

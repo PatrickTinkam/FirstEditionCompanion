@@ -5,17 +5,17 @@ import android.view.*;
 import android.widget.*;
 import org.json.*;
 
-/** v0.9.4: profile-first empty state plus clarified creator qualification flow. */
+/** v0.9.5: profile-first empty state plus guided creator distribution improvements. */
 public class MainActivityV12 extends MainActivityV11 {
   @Override JSONObject makeBackup(){
     JSONObject o=super.makeBackup();
-    try{o.put("appVersion","0.9.4");}catch(Exception ignored){}
+    try{o.put("appVersion","0.9.5");}catch(Exception ignored){}
     return o;
   }
 
   @Override void shell(){
     LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(BG);setContentView(root);
-    TextView title=t("FIRST EDITION COMPANION  •  v0.9.4",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
+    TextView title=t("FIRST EDITION COMPANION  •  v0.9.5",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
     float w=getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density;boolean wide=w>=700;
     LinearLayout body=new LinearLayout(this);body.setOrientation(wide?LinearLayout.HORIZONTAL:LinearLayout.VERTICAL);root.addView(body,new LinearLayout.LayoutParams(-1,0,1));
     LinearLayout nav=new LinearLayout(this);nav.setOrientation(wide?LinearLayout.VERTICAL:LinearLayout.HORIZONTAL);
@@ -39,7 +39,7 @@ public class MainActivityV12 extends MainActivityV11 {
     String name=S("name","").trim();
 
     LinearLayout profiles=card("Character Profiles");
-    profiles.addView(t("App Version: v0.9.4",14,GOLD,true));
+    profiles.addView(t("App Version: v0.9.5",14,GOLD,true));
     profiles.addView(t(active?"Active character: "+name:"No active character",14,MUT,false));
     profiles.addView(t(active
       ?"Create New Character opens a separate guided draft. Your current character remains untouched until a new character is finished."

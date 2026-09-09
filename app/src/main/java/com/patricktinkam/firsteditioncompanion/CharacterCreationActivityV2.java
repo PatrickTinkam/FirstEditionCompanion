@@ -5,11 +5,11 @@ import android.view.*;
 import android.widget.*;
 import java.util.*;
 
-/** v0.9.4 presentation/validation layer for the guided creator. */
+/** v0.9.5 presentation/validation layer for the guided creator. */
 public class CharacterCreationActivityV2 extends CharacterCreationActivity {
   @Override void buildShell(){
     LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(BG);setContentView(root);
-    TextView title=t("CREATE CHARACTER  •  v0.9.4",19,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
+    TextView title=t("CREATE CHARACTER  •  v0.9.5",19,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
     progress=t("",13,MUT,true);progress.setGravity(Gravity.CENTER);root.addView(progress,new LinearLayout.LayoutParams(-1,dp(38)));
     ScrollView scroll=new ScrollView(this);content=new LinearLayout(this);content.setOrientation(LinearLayout.VERTICAL);content.setPadding(dp(6),dp(4),dp(6),dp(22));scroll.addView(content);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
     LinearLayout nav=new LinearLayout(this);nav.setPadding(dp(7),dp(6),dp(7),dp(7));
@@ -74,9 +74,90 @@ public class CharacterCreationActivityV2 extends CharacterCreationActivity {
     add(content,note);
   }
 
+  boolean poolMethod(){return draft.rollMethod.startsWith("DMG Method I —")||draft.rollMethod.startsWith("DMG Method II");}
+  boolean manualMethod(){return "Manual entry".equals(draft.rollMethod);}
+
+  void clearScoresAndPool(){Arrays.fill(draft.rawScores,0);draft.rolledPool.clear();}
+  boolean allRawScoresPresent(){for(int v:draft.rawScores)if(v<=0)return false;return true;}
+
+  void migrateLegacyPoolIfNeeded(){
+    if(!poolMethod()||!draft.rolledPool.isEmpty()||!allRawScoresPresent())return;
+    for(int v:draft.rawScores)draft.rolledPool.add(v);
+    saveDraft();
+  }
+
+  void sanitizePoolAssignments(){
+    if(!poolMethod()||draft.rolledPool.size()!=6)return;
+    HashMap<Integer,Integer> counts=new HashMap<>();
+    for(int v:draft.rolledPool)counts.put(v,counts.getOrDefault(v,0)+1);
+    boolean changed=false;
+    for(int i=0;i<6;i++){
+      int v=draft.rawScores[i];if(v<=0)continue;
+      int left=counts.getOrDefault(v,0);
+      if(left<=0){draft.rawScores[i]=0;changed=true;}else counts.put(v,left-1);
+    }
+    if(changed)saveDraft();
+  }
+
+  TreeMap<Integer,Integer> poolCountsExcludingSlot(int slot){
+    TreeMap<Integer,Integer> counts=new TreeMap<>(Collections.reverseOrder());
+    for(int v:draft.rolledPool)counts.put(v,counts.getOrDefault(v,0)+1);
+    for(int i=0;i<6;i++)if(i!=slot&&draft.rawScores[i]>0){
+      int v=draft.rawScores[i],left=counts.getOrDefault(v,0);if(left>0)counts.put(v,left-1);
+    }
+    counts.entrySet().removeIf(e->e.getValue()<=0);return counts;
+  }
+
+  TreeMap<Integer,Integer> remainingPoolCounts(){
+    TreeMap<Integer,Integer> counts=new TreeMap<>(Collections.reverseOrder());
+    for(int v:draft.rolledPool)counts.put(v,counts.getOrDefault(v,0)+1);
+    for(int v:draft.rawScores)if(v>0){int left=counts.getOrDefault(v,0);if(left>0)counts.put(v,left-1);}
+    counts.entrySet().removeIf(e->e.getValue()<=0);return counts;
+  }
+
+  String countsText(Map<Integer,Integer> counts){
+    if(counts.isEmpty())return "None";StringBuilder s=new StringBuilder();
+    for(Map.Entry<Integer,Integer> e:counts.entrySet()){if(s.length()>0)s.append("  •  ");s.append(e.getKey());if(e.getValue()>1)s.append(" ×").append(e.getValue());}
+    return s.toString();
+  }
+
+  String fullPoolText(){
+    TreeMap<Integer,Integer> counts=new TreeMap<>(Collections.reverseOrder());
+    for(int v:draft.rolledPool)counts.put(v,counts.getOrDefault(v,0)+1);
+    return countsText(counts);
+  }
+
+  void addPoolAssignmentRow(LinearLayout scores,int ix){
+    LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);
+    row.addView(t(CharacterDraft.ABILITIES[ix],14,MUT,true),new LinearLayout.LayoutParams(dp(80),-2));
+    TreeMap<Integer,Integer> available=poolCountsExcludingSlot(ix);
+    ArrayList<String> labels=new ArrayList<>();ArrayList<Integer> values=new ArrayList<>();
+    labels.add("— Unassigned —");values.add(0);int selected=0;
+    for(Map.Entry<Integer,Integer> en:available.entrySet()){
+      String label=String.valueOf(en.getKey());if(en.getValue()>1)label+="  ("+en.getValue()+" copies available)";
+      labels.add(label);values.add(en.getKey());if(en.getKey()==draft.rawScores[ix])selected=values.size()-1;
+    }
+    Spinner pick=new Spinner(this);pick.setAdapter(spinnerAdapter(labels));pick.setSelection(selected);
+    row.addView(pick,new LinearLayout.LayoutParams(0,dp(58),1));scores.addView(row);
+    pick.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+      public void onItemSelected(AdapterView<?> p,View v,int pos,long id){int chosen=values.get(pos);if(chosen==draft.rawScores[ix])return;draft.rawScores[ix]=chosen;saveDraft();render();}
+      public void onNothingSelected(AdapterView<?> p){}
+    });
+  }
+
   @Override void abilityStep(){
+    migrateLegacyPoolIfNeeded();sanitizePoolAssignments();
+
+    TextView finalPreview=t("",13,TXT,false),qualificationCheck=t("",13,TXT,false);
+    Runnable refreshValidation=()->{
+      finalPreview.setText(scoreText(false));
+      ArrayList<String> problems=CharacterRules.validateAbilityScores(draft);
+      qualificationCheck.setText(problems.isEmpty()?"✓ Ability distribution qualifies for the selected class.":joinProblems(problems));
+      qualificationCheck.setTextColor(problems.isEmpty()?GOOD:WARN);updateContinueState();
+    };
+
     LinearLayout intro=card("Establish Ability Scores");
-    intro.addView(t("Roll first, then arrange/edit scores as your chosen method allows. This is where the selected class's minimum ability requirements are actually enforced. Raw scores stay separate from adjusted scores so racial modifiers can never be applied twice.",14,TXT,false));
+    intro.addView(t("Rolling is the default. Methods I and II create a pool of six scores that you may distribute manually or auto-distribute for the selected class/class combination. Method III rolls each ability separately, Method IV chooses a complete in-order set, and Manual Entry lets you type scores directly. Class minimums are enforced only after the appropriate distribution is complete.",14,TXT,false));
     add(content,intro);
 
     LinearLayout roll=card("Roll Ability Scores");
@@ -84,47 +165,87 @@ public class CharacterCreationActivityV2 extends CharacterCreationActivity {
     Button rollButton=b("ROLL");roll.addView(rollButton,new LinearLayout.LayoutParams(-1,dp(56)));
     TextView rollNote=t("",12,MUT,false);roll.addView(rollNote);add(content,roll);
 
-    LinearLayout scores=card("Raw → Racially Adjusted Scores");
+    LinearLayout scores=card(poolMethod()?"Distribute Rolled Scores":"Raw → Racially Adjusted Scores");
     scores.addView(t("Racial modifiers: "+CharacterRules.modifierSummary(draft.raceName),13,GOLD,true));
-    TextView finalPreview=t("",13,TXT,false);scores.addView(finalPreview);
+
+    if(poolMethod()){
+      if(draft.rolledPool.size()==6){
+        scores.addView(t("Rolled pool: "+fullPoolText(),14,TXT,true));
+        scores.addView(t("Remaining unassigned: "+countsText(remainingPoolCounts()),13,GOLD,true));
+        Button auto=b("AUTO DISTRIBUTE FOR "+AbilityDistributionRules.selectedClassLabel(draft.className).toUpperCase(Locale.US));
+        auto.setOnClickListener(v->{AbilityDistributionRules.Result r=AbilityDistributionRules.autoDistribute(draft);if(r.complete)saveDraft();toast(r.note);render();});
+        scores.addView(auto,new LinearLayout.LayoutParams(-1,dp(54)));
+        scores.addView(t("Auto Distribution considers the selected class—or every recognized class in a multiclass/dual-class combination—then tries to satisfy all encoded minimums after racial adjustments before favoring prime/principal abilities. You can freely change the result afterward.",12,MUT,false));
+        scores.addView(t("Manual distribution: choose a value for each ability. Assigning a value consumes one copy from the shared pool. Changing or clearing that ability returns its previous value to the pool.",12,MUT,false));
+        for(int i=0;i<6;i++)addPoolAssignmentRow(scores,i);
+      }else{
+        scores.addView(t("Press ROLL to generate the six-score pool. Afterward you can assign the values yourself or let the app auto-distribute them for the selected class/class combination.",14,WARN,false));
+        for(int i=0;i<6;i++){
+          LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);
+          row.addView(t(CharacterDraft.ABILITIES[i],14,MUT,true),new LinearLayout.LayoutParams(dp(80),-2));
+          row.addView(t("— waiting for roll —",14,TXT,false),new LinearLayout.LayoutParams(0,-2,1));scores.addView(row);
+        }
+      }
+    }else if(manualMethod()){
+      scores.addView(t("Enter the six raw scores manually. Racial adjustments are shown below but stored separately from the raw values.",12,MUT,false));
+      for(int i=0;i<6;i++){
+        final int ix=i;LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);
+        row.addView(t(CharacterDraft.ABILITIES[i],14,MUT,true),new LinearLayout.LayoutParams(dp(80),-2));
+        EditText q=e(draft.rawScores[i]>0?String.valueOf(draft.rawScores[i]):"",CharacterDraft.ABILITIES[i],true);
+        row.addView(q,new LinearLayout.LayoutParams(0,-2,1));scores.addView(row);
+        q.addTextChangedListener(new SimpleWatcher(){public void afterTextChanged(Editable z){try{draft.rawScores[ix]=Integer.parseInt(z.toString());}catch(Exception ex){draft.rawScores[ix]=0;}saveDraft();refreshValidation.run();}});
+      }
+    }else{
+      String rule=draft.rollMethod.startsWith("DMG Method III")
+        ?"Method III rolls each ability independently; these results stay attached to their listed abilities."
+        :"Method IV selects one complete 3d6-in-order set; the selected set stays in its rolled ability order.";
+      scores.addView(t(rule,12,MUT,false));
+      for(int i=0;i<6;i++){
+        LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);
+        row.addView(t(CharacterDraft.ABILITIES[i],14,MUT,true),new LinearLayout.LayoutParams(dp(80),-2));
+        row.addView(t(draft.rawScores[i]>0?String.valueOf(draft.rawScores[i]):"— not rolled —",16,TXT,true),new LinearLayout.LayoutParams(0,-2,1));scores.addView(row);
+      }
+    }
+
+    scores.addView(finalPreview);add(content,scores);
 
     ClassData.Entry cls=ClassData.find(draft.className);
     LinearLayout validate=card("Class Qualification Check");
     validate.addView(t("Selected class: "+(cls==null?draft.className:cls.name),14,TXT,true));
-    validate.addView(t("Requirements: "+(cls==null?"Unknown":cls.requirements),13,GOLD,true));
-    TextView check=t("",13,TXT,false);validate.addView(check);
+    validate.addView(t("Requirements: "+(cls==null?"Combined/custom selection — checked from recognized class components":cls.requirements),13,GOLD,true));
+    validate.addView(qualificationCheck);
     validate.addView(t("Passing here means the race/class combination is legal and the racially adjusted scores meet the current starting requirements. Age adjustments are applied next and the app will recheck the final scores there as well.",12,MUT,false));
-
-    Runnable refresh=()->{
-      finalPreview.setText(scoreText(false));
-      ArrayList<String> problems=CharacterRules.validateAbilityScores(draft);
-      check.setText(problems.isEmpty()?"✓ Ability distribution qualifies for the selected class.":joinProblems(problems));
-      check.setTextColor(problems.isEmpty()?GOOD:WARN);
-      updateContinueState();
-    };
-
-    for(int i=0;i<6;i++){
-      final int ix=i;
-      LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);
-      row.addView(t(CharacterDraft.ABILITIES[i],14,MUT,true),new LinearLayout.LayoutParams(dp(80),-2));
-      EditText q=e(draft.rawScores[i]>0?String.valueOf(draft.rawScores[i]):"",CharacterDraft.ABILITIES[i],true);
-      row.addView(q,new LinearLayout.LayoutParams(0,-2,1));scores.addView(row);
-      q.addTextChangedListener(new SimpleWatcher(){public void afterTextChanged(Editable z){
-        try{draft.rawScores[ix]=Integer.parseInt(z.toString());}catch(Exception ex){draft.rawScores[ix]=0;}
-        saveDraft();refresh.run();
-      }});
-    }
-    add(content,scores);add(content,validate);
+    add(content,validate);
 
     method.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
       public void onItemSelected(AdapterView<?> p,View v,int pos,long id){
-        draft.rollMethod=ROLL_METHODS[pos];saveDraft();boolean manual="Manual entry".equals(draft.rollMethod);
-        rollButton.setEnabled(!manual);rollButton.setText(manual?"Manual Entry Selected":"ROLL");
-        rollNote.setText(manual?"Enter and distribute scores below.":"Rolled values populate the fields below. Methods that allow arrangement can be rearranged by editing the raw-score fields before continuing.");
+        String next=ROLL_METHODS[pos];
+        if(!next.equals(draft.rollMethod)){draft.rollMethod=next;clearScoresAndPool();saveDraft();render();return;}
+        if(manualMethod()){
+          rollButton.setEnabled(false);rollButton.setText("Manual Entry Selected");rollNote.setText("Type the six raw scores directly below. Switching generation methods starts a fresh score set.");
+        }else if(poolMethod()){
+          rollButton.setEnabled(true);rollButton.setText(draft.rolledPool.size()==6?"ROLL NEW POOL":"ROLL SCORE POOL");rollNote.setText("This method creates six freely assignable scores. A new roll replaces the current pool and clears its assignments.");
+        }else if(draft.rollMethod.startsWith("DMG Method III")){
+          rollButton.setEnabled(true);rollButton.setText("ROLL METHOD III");rollNote.setText("Each ability keeps the best of six 3d6 rolls made specifically for that ability.");
+        }else{
+          rollButton.setEnabled(true);rollButton.setText("ROLL / CHOOSE SET");rollNote.setText("Generate twelve complete in-order sets, then choose one whole set.");
+        }
       }
       public void onNothingSelected(AdapterView<?> p){}
     });
-    rollButton.setOnClickListener(v->rollScores());
-    refresh.run();
+    rollButton.setOnClickListener(v->rollScores());refreshValidation.run();
+  }
+
+  @Override void rollScores(){
+    String m=draft.rollMethod;
+    if(m.startsWith("DMG Method I —")){
+      clearScoresAndPool();for(int i=0;i<6;i++)draft.rolledPool.add(roll4d6DropLowest());saveDraft();render();toast("Six scores rolled. Assign them manually or use Auto Distribute.");
+    }else if(m.startsWith("DMG Method II")){
+      clearScoresAndPool();ArrayList<Integer> rolls=new ArrayList<>();for(int i=0;i<12;i++)rolls.add(roll3d6());rolls.sort(Collections.reverseOrder());for(int i=0;i<6;i++)draft.rolledPool.add(rolls.get(i));saveDraft();render();toast("Best six scores kept. Assign them manually or use Auto Distribute.");
+    }else if(m.startsWith("DMG Method III")){
+      clearScoresAndPool();for(int a=0;a<6;a++){int best=0;for(int j=0;j<6;j++)best=Math.max(best,roll3d6());draft.rawScores[a]=best;}saveDraft();render();
+    }else if(m.startsWith("DMG Method IV")){
+      clearScoresAndPool();saveDraft();showMethodIVSets();
+    }
   }
 }
