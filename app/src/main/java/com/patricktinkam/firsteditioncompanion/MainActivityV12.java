@@ -1,6 +1,7 @@
 package com.patricktinkam.firsteditioncompanion;
 
 import android.content.*;
+import android.graphics.*;
 import android.view.*;
 import android.widget.*;
 import org.json.*;
