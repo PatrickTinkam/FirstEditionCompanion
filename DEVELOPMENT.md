@@ -27,3 +27,16 @@ The source-details view must:
 - Explicitly flag source ambiguity or disagreement instead of inventing or silently reconciling a rule.
 
 This pattern applies to character creation and to future rules-aware warnings in proficiencies, spells, equipment, magic items, combat, advancement, and other app areas.
+
+## Randomness / dice policy
+All user-facing random outcomes must use the shared `DiceRng` service. Do not create a new `Random`, call `Math.random()`, or reseed a generator inside a roll action.
+
+The shared RNG policy applies to:
+- Generic dice expressions and quick-die buttons.
+- Attack and saving-throw rolls.
+- Damage rolls.
+- Character-creation ability generation.
+- Starting age and other random character-generation tables.
+- Future hit-point, treasure, encounter, item-effect, or other random-table mechanics.
+
+`DiceRng` uses one OS-seeded `SecureRandom` instance and bounded `nextInt` calls so legal die faces are selected uniformly without modulo bias or time-based repeat patterns. The Dice screen includes a runtime self-check that samples all standard dice and verifies that every legal face is reachable.

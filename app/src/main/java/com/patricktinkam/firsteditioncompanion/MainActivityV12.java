@@ -1,21 +1,27 @@
 package com.patricktinkam.firsteditioncompanion;
 
 import android.content.*;
+import android.graphics.*;
 import android.view.*;
 import android.widget.*;
 import org.json.*;
 
-/** v0.9.6: profile-first sheet plus source-grounded guided-creator rule details. */
+/** v0.9.7: profile-first sheet, source details, and centralized SecureRandom dice. */
 public class MainActivityV12 extends MainActivityV11 {
+  @Override public void onCreate(android.os.Bundle state){
+    rng=DiceRng.adapter();
+    super.onCreate(state);
+  }
+
   @Override JSONObject makeBackup(){
     JSONObject o=super.makeBackup();
-    try{o.put("appVersion","0.9.6");}catch(Exception ignored){}
+    try{o.put("appVersion","0.9.7");}catch(Exception ignored){}
     return o;
   }
 
   @Override void shell(){
     LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(BG);setContentView(root);
-    TextView title=t("FIRST EDITION COMPANION  •  v0.9.6",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
+    TextView title=t("FIRST EDITION COMPANION  •  v0.9.7",18,GOLD,true);title.setGravity(Gravity.CENTER);root.addView(title,new LinearLayout.LayoutParams(-1,dp(52)));
     float w=getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density;boolean wide=w>=700;
     LinearLayout body=new LinearLayout(this);body.setOrientation(wide?LinearLayout.HORIZONTAL:LinearLayout.VERTICAL);root.addView(body,new LinearLayout.LayoutParams(-1,0,1));
     LinearLayout nav=new LinearLayout(this);nav.setOrientation(wide?LinearLayout.VERTICAL:LinearLayout.HORIZONTAL);
@@ -29,6 +35,20 @@ public class MainActivityV12 extends MainActivityV11 {
     startActivity(new Intent(this,CharacterCreationActivityV3.class));
   }
 
+  @Override void dice(LinearLayout c){
+    LinearLayout audit=card("Randomness / RNG");
+    audit.addView(t("All attack rolls, saving throws, damage dice, quick dice, character-creation rolls, age rolls, and other built-in dice use one shared OS-seeded SecureRandom source. The app does not reseed the generator on each roll.",12,MUT,false));
+    TextView result=t("RNG source active. Tap the self-check to sample every standard die used by the app.",13,TXT,false);audit.addView(result);
+    Button check=b("Run RNG Self-Check");
+    check.setOnClickListener(v->{
+      DiceRng.Audit a=DiceRng.auditStandardDice();
+      result.setText(a.summary+"\n\nSamples: "+a.totalSamples);
+      result.setTextColor(a.passed?Color.rgb(153,205,139):Color.rgb(230,180,90));
+    });
+    audit.addView(check,new LinearLayout.LayoutParams(-1,dp(48)));add(c,audit);
+    super.dice(c);
+  }
+
   boolean hasActiveCharacter(){
     String name=S("name","").trim();
     return !name.isEmpty()&&!name.equalsIgnoreCase("New Character");
@@ -39,7 +59,7 @@ public class MainActivityV12 extends MainActivityV11 {
     String name=S("name","").trim();
 
     LinearLayout profiles=card("Character Profiles");
-    profiles.addView(t("App Version: v0.9.6",14,GOLD,true));
+    profiles.addView(t("App Version: v0.9.7",14,GOLD,true));
     profiles.addView(t(active?"Active character: "+name:"No active character",14,MUT,false));
     profiles.addView(t(active
       ?"Create New Character opens a separate guided draft. Your current character remains untouched until a new character is finished."
