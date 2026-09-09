@@ -1,39 +1,40 @@
-# First Edition Companion v0.9.5
+# First Edition Companion v0.9.6
 
-v0.9.5 adds class-aware ability-score distribution on top of the v0.9.4 qualification-order fix.
+v0.9.6 establishes a reusable source-details pattern for rules warnings and restrictions in the guided character creator.
 
-## Rolled score pool
-- **DMG Method I** and **DMG Method II** now create a persistent six-score pool instead of immediately locking values into STR/INT/WIS/DEX/CON/CHA.
-- Each ability uses a dropdown containing only score values still available from the shared pool.
-- Assigning a value consumes one copy from the pool; changing or clearing that slot returns its previous value.
-- Duplicate numerical rolls are tracked as separate copies rather than collapsing into one value.
-- The rolled pool is stored in the character draft so Back navigation, fold/unfold, rotation, or draft resume do not lose the original six rolls.
+## Why? • Source buttons
+- Rules-sensitive creator cards now include a small **Why? • Source** button.
+- The detail window explains why the current character is seeing the warning/check rather than only repeating the error text.
+- The dialog identifies the governing PHB, DMG, or supplied-UA-variant source and includes the relevant section plus a verified page number when one is known.
+- Mechanical facts such as allowed classes, minimum scores, age effects, alignment restrictions, and language capacity remain available natively/offline.
+- Longer source wording is paraphrased; brief direct excerpts are used only where helpful.
 
-## Auto Distribute for Class
-- After Methods I or II roll a pool, the player can choose **Auto Distribute for Class** or assign every score manually.
-- Auto Distribution first tries to satisfy all encoded class minimums after racial modifiers, then favors prime/principal abilities.
-- Recognized multiclass/dual-class strings are evaluated as a combined requirement set so one class is not optimized at the expense of another.
-- Auto Distribution never locks the scores; the player can still change every assignment afterward with the dropdowns.
-- If the rolled pool cannot satisfy all encoded requirements, the app uses the closest class-focused arrangement and tells the player that the character still does not qualify.
+## Warning families covered now
+- **Race / class restrictions** — including the core PHB elf class list used by the Elf → Cleric warning.
+- **Class ability requirements** — shows selected class requirements, current adjusted scores, and the active failed checks.
+- **Age / aging checks** — explains the DMG rule that age adjustments are cumulative and cannot lower abilities below racial/class minimums.
+- **Alignment restrictions** — ties the current class/alignment combination back to the PHB alignment/class rule.
+- **Language capacity** — explains final-INT capacity, automatic-vs-additional languages, racial limits, and source location.
 
-## Method integrity
-- **Method III** results stay tied to the individual abilities they were rolled for.
-- **Method IV** keeps the chosen complete set in STR/INT/WIS/DEX/CON/CHA order.
-- **Manual Entry** remains fully editable.
+## Project-wide warning policy
+- `DEVELOPMENT.md` now requires future AD&D-mechanical warnings/errors/restrictions to ship with a nearby **Why? / Source Details** affordance whenever the supplied sources support an explanation.
+- The same pattern is intended for future weapon proficiency, equipment, spell, magic-item, advancement, and combat validation warnings.
+- House rules and supplied-UA-variant mechanics must remain visibly source-labeled instead of being presented as core PHB/DMG rules.
 
-## Qualification timing carried forward from v0.9.4
-- The Class step checks race/class compatibility only and shows ability minimums as advance guidance.
-- Actual ability-score qualification happens after rolling/distribution and racial adjustments.
-- Age applies its modifiers afterward and performs another final class-requirement check.
-- Manual typing continues to refresh the visible qualification result immediately.
+## Existing v0.9.5 behavior retained
+- Class selection still separates race/class compatibility from ability-score qualification.
+- DMG Methods I and II still use the persistent six-score assignment pool.
+- Manual dropdown distribution and **Auto Distribute for Class** remain available.
+- Method III remains ability-specific; Method IV remains an in-order complete set.
+- Existing saved characters and in-progress creation drafts are not intentionally rewritten by this change.
 
 ## Version confirmation
-- Main app title: **v0.9.5**
-- Character Profiles card: **App Version: v0.9.5**
-- Guided creator title: **v0.9.5**
+- Main app title: **v0.9.6**
+- Character Profiles card: **App Version: v0.9.6**
+- Guided creator title: **v0.9.6**
 
 ## Updating
-v0.9.5 uses the same stable prototype signing key and should install directly over v0.9.4 while preserving app-local data. Existing saved characters are not rewritten by this change.
+v0.9.6 uses the same stable prototype signing key and should install directly over v0.9.5 while preserving app-local data.
 
 ## Installation
-Download the attached `FirstEditionCompanion-v0.9.5.apk` and install it on Android.
+Download the attached `FirstEditionCompanion-v0.9.6.apk` and install it on Android.

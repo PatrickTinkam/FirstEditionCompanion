@@ -13,3 +13,17 @@
 The release tag is derived from `versionName` (with the `-prototype` suffix removed), so `0.4.0-prototype` becomes GitHub Release `v0.4.0`.
 
 Do not treat an update as complete merely because source code was committed. A successful APK build, synchronized README current-version information, matching GitHub Release, and direct APK test link are all part of the definition of done for this project.
+
+## Rules warning / error UI policy
+Any user-facing warning, error, restriction, or failed rules validation that comes from AD&D mechanics must provide a nearby **Why? / Source Details** affordance whenever a source-grounded explanation exists.
+
+The source-details view must:
+- Explain the character-specific reason the warning is appearing.
+- Identify the governing source (PHB, DMG, supplied UA variant, or clearly labeled campaign/house rule).
+- Include the relevant section and a verified page number when one is known.
+- Preserve exact mechanical facts such as minimum scores, class/race restrictions, limits, percentages, dice, and level thresholds.
+- Use concise native paraphrase rather than reproducing long copyrighted passages verbatim; a brief source excerpt may be included when useful.
+- Remain fully usable offline and never require opening a linked PDF to understand the warning.
+- Explicitly flag source ambiguity or disagreement instead of inventing or silently reconciling a rule.
+
+This pattern applies to character creation and to future rules-aware warnings in proficiencies, spells, equipment, magic items, combat, advancement, and other app areas.

@@ -13,6 +13,10 @@
             android:exported="false"
             android:screenOrientation="unspecified" />
         <activity
+            android:name=".CharacterCreationActivityV3"
+            android:exported="false"
+            android:screenOrientation="unspecified" />
+        <activity
             android:name=".MainActivityV12"
             android:exported="true"
             android:screenOrientation="unspecified">
