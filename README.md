@@ -2,9 +2,9 @@
 
 A dependency-light Android companion for tracking an AD&D 1st Edition character during play.
 
-## Current version: v0.9.3
+## Current version: v0.9.4
 
-[Download the official v0.9.3 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.3/FirstEditionCompanion-v0.9.3.apk)
+[Download the official v0.9.4 APK](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/download/v0.9.4/FirstEditionCompanion-v0.9.4.apk)
 
 [View the latest GitHub Release](https://github.com/PatrickTinkam/FirstEditionCompanion/releases/latest)
 
@@ -16,8 +16,10 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 - Portable JSON **Export Saves / Import Saves** with Merge and Restore/Replace
 - Guided character-creation draft is isolated from the active character and can be resumed, kept, or discarded safely
 - Wizard **Back** navigation allows earlier choices to change while later choices are retained and revalidated
-- Race/Subrace choice drives class availability while all classes remain visible for learning and details
-- Unavailable classes remain visible and still expose full **Class Details**
+- Race/Subrace choice drives race/class compatibility while all classes remain visible for learning and details
+- Class selection separates **race compatibility** from **ability-score qualification**
+- Class minimum ability requirements are shown during class selection but enforced only after ability rolling/distribution
+- Ability-score Rules Check updates live while scores are manually edited
 - Ability-score step supports DMG Methods I–IV plus manual entry, with raw scores kept separately so modifiers cannot be applied twice
 - DMG-based **Age** step with source-table rolls, manual override, age categories, cumulative aging modifiers, and post-age class requirement checks
 - **Alignment** step keeps all nine alignments visible and marks class-incompatible choices unavailable rather than hiding them
@@ -41,16 +43,24 @@ A dependency-light Android companion for tracking an AD&D 1st Edition character 
 
 The current wizard contains seven screens:
 1. **Race / Subrace** — choose from the native race catalog and open Race Details.
-2. **Class / Subclass** — every built-in class remains visible; unavailable choices are marked but still allow Class Details.
-3. **Ability Scores** — roll with DMG Methods I–IV or enter scores manually; raw values are stored separately from adjusted values.
-4. **Age** — roll from the DMG race/class starting-age table where supported, or use a manual/campaign age; age category and cumulative aging modifiers are shown.
+2. **Class / Subclass** — every built-in class remains visible. The screen checks only whether the chosen race can use that class; exact class ability requirements are displayed but are not treated as pass/fail yet.
+3. **Ability Scores** — roll with DMG Methods I–IV or enter/rearrange scores manually. After racial adjustments, the app performs the actual selected-class qualification check and blocks Continue until the current requirements are met.
+4. **Age** — roll from the DMG race/class starting-age table where supported, or use a manual/campaign age; age category and cumulative aging modifiers are shown and final class requirements are checked again.
 5. **Alignment** — all nine alignments remain visible and are marked available/unavailable according to class.
 6. **Languages** — automatic languages plus additional-language capacity based on final Intelligence and racial restrictions.
 7. **Draft Review** — review race, class, age, alignment, final scores, and languages, then save the draft and return.
 
+### Class eligibility timing
+
+The wizard deliberately separates two different 1e rules:
+- **Race/class compatibility** is known as soon as race and class are selected. A race-restricted class remains visible for learning/details, but ability rolls cannot make an otherwise illegal race/class combination legal under core rules.
+- **Ability-score qualification** is checked only after the player has rolled and distributed scores. The Class step shows the required minimums in advance so the player knows what scores to aim for.
+
+Some nonhuman class level limits can also vary with ability scores. Those are advancement limits rather than a reason to reject an otherwise legal level-1 class choice during the Class step.
+
 The creator is not a one-way questionnaire. Going Back preserves later choices where possible and revalidates them instead of silently deleting them.
 
-v0.9.3 still deliberately does **not** commit a partially built character into the active play sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are complete and can be committed atomically.
+v0.9.4 still deliberately does **not** commit a partially built character into the active play sheet. The active character remains untouched until the remaining wizard steps—weapon proficiencies, secondary skills, health, class skills, spell setup, money, equipment, optional personality/background, derived combat values, and final review—are complete and can be committed atomically.
 
 ## Sheet behavior
 
@@ -74,7 +84,7 @@ For a Cleric, the full built-in Cleric spell list is available automatically, gr
 
 Use **Export Saves** before major updates or moving devices. Backups include current-character data, saved profiles, structured inventory/currency, spellbooks, prepared spells, gear notes, and combat values.
 
-Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.3 should install directly over v0.9.2 while preserving app-local data.
+Official builds from v0.4.0 onward use the same stable prototype signing key, so v0.9.4 should install directly over v0.9.3 while preserving app-local data.
 
 ## Build and release policy
 
